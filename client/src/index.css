@@ -307,3 +307,18 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
 .nm-review-photos { display:flex; gap:6px; margin-top:12px; }
 .nm-review-photos img { width:54px; height:54px; object-fit:cover; border:1px solid var(--line); }
 @media (max-width:680px) { .nm-floating-cart { right:12px; bottom:12px; width:calc(100vw - 24px); } .nm-search-suggestions { position:fixed; left:16px; right:16px; top:124px; } }
+
+/* Natural-language intent and free-shipping threshold feedback. */
+.nm-search-intent { display:block; min-height:15px; margin:5px 3px 0; color:var(--muted); font:9px var(--mono); letter-spacing:.04em; }
+.nm-shipping-celebration { position:fixed; inset:0; z-index:96; display:grid; place-items:center; pointer-events:none; background:radial-gradient(circle at 50% 45%,rgba(216,255,84,.15),transparent 24rem); }
+.nm-shipping-celebration > div:last-child { display:flex; flex-direction:column; align-items:center; gap:7px; padding:24px 32px; color:var(--ink); background:rgba(17,15,21,.92); border:1px solid rgba(216,255,84,.55); box-shadow:0 0 70px rgba(216,255,84,.16); text-align:center; animation:nm-shipping-pop .55s cubic-bezier(.23,1,.32,1) both; }
+.nm-shipping-celebration svg { color:var(--lime); filter:drop-shadow(0 0 9px rgba(216,255,84,.7)); }
+.nm-shipping-celebration span { color:var(--lime); font:600 10px var(--mono); letter-spacing:.16em; }
+.nm-shipping-celebration strong { font:600 26px var(--display); }
+.nm-confetti { position:absolute; width:1px; height:1px; }
+.nm-confetti i { position:absolute; width:6px; height:16px; background:var(--orange); transform:rotate(calc(var(--i) * 31deg)) translateY(-130px); animation:nm-confetti-fall 1.6s ease-out both; }
+.nm-confetti i:nth-child(2n) { background:var(--lime); }
+.nm-confetti i:nth-child(3n) { background:var(--amethyst); }
+@keyframes nm-shipping-pop { from { opacity:0; transform:scale(.86) translateY(12px); } to { opacity:1; transform:none; } }
+@keyframes nm-confetti-fall { from { opacity:0; } 20% { opacity:1; } to { opacity:0; transform:rotate(calc(var(--i) * 31deg + 160deg)) translateY(220px) translateX(calc(var(--i) * 9px - 50px)); } }
+@media (prefers-reduced-motion:reduce) { .nm-shipping-celebration > div:last-child { animation:none; } .nm-confetti { display:none; } }

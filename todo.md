@@ -1,8 +1,7 @@
-# NIGHT MARKET skill and feature expansion
+# NIGHT MARKET skill and feature iteration
 
-- [ ] Plan reusable skill contents: workflow, quality gates, asset rules, commerce safety, and validation steps.
-- [ ] Initialize `/home/ubuntu/skills/night-market-storefront` with skill-creator tooling and write concise reusable instructions.
-- [ ] Add dynamic catalog search with keyboard-friendly autocomplete and visual product previews.
-- [ ] Add a persistent floating cart widget with item preview, cart count, and free-shipping progress.
-- [ ] Add a truthful reviews/rating model with empty-state handling and user-photo gallery hooks; never fabricate reviews, ratings, or testimonials.
-- [ ] Run project typecheck/build, responsive visual checks, skill validation, and save the production checkpoint.
+- [ ] Update the reusable skill with shipping-threshold feedback, mock-data labeling, and natural-language discovery guidance.
+- [ ] Add natural-language query parsing and visual result explanations for mood, style, theme, and use-case descriptions.
+- [ ] Add a one-time confetti/glow celebration when free shipping is first unlocked, with reduced-motion fallback.
+- [ ] Add clearly labeled visual-test mock reviews and photo gallery rendering without presenting them as real customer evidence.
+- [ ] Run typecheck/build, responsive screenshots, runtime checks, skill validation, and save a new release checkpoint.
