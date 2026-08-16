@@ -6,7 +6,7 @@ Render can use `GET /api/health` as a lightweight health check. It returns `{ "s
 
 ## Environment checklist
 
-The public storefront works with the safe fallback paths. Optional integrations must be configured through Render environment variables, never committed to the repository or exposed in client code. `SHIPPING_RATES_RUB` accepts a JSON object keyed by the supported `RU_*` regions. Review and NLP credentials are server-only. Payment and carrier providers remain demo-backed until a verified provider contract and credentials are supplied.
+The public storefront works with the safe fallback paths. Optional integrations must be configured through Render environment variables, never committed to the repository or exposed in client code. `SHIPPING_RATES_RUB` accepts a JSON object keyed by the supported `RU_*` regions. Review and NLP credentials are server-only. The storefront does not collect online payment. Checkout prepares a URL-encoded order summary and opens the operator's Telegram chat at `https://t.me/eloquncy`; availability, address, final delivery, and payment method are confirmed manually in that chat. Carrier providers remain fallback-backed until a verified live tariff contract is supplied.
 
 ## Media delivery audit
 
@@ -22,8 +22,8 @@ The public storefront initializes OAuth from the configured server base URL but 
 
 ## Observability and privacy
 
-Integration failures surface as honest empty or unavailable states. Logs must redact authorization headers, tokens, customer photos, email addresses, and provider payloads. Analytics should use aggregate events such as `favorite_added`, `cart_opened`, `checkout_demo_opened`, and `shipping_region_changed`; do not send product notes, payment details, or raw user-entered search text.
+Integration failures surface as honest empty or unavailable states. Logs must redact authorization headers, tokens, customer photos, email addresses, and provider payloads. Analytics should use aggregate events such as `favorite_added`, `cart_opened`, `telegram_order_handoff_opened`, and `shipping_region_changed`; do not send product notes, payment details, Telegram message contents, or raw user-entered search text.
 
 ## Release verification
 
-Before a release, run `pnpm check`, `pnpm test`, `pnpm run build`, responsive preview checks for `/`, `/lookbook`, `/favorites`, and `/policies`, and direct HTML checks for route-specific title/canonical metadata. Live shipping and payment tests require provider credentials and must not be simulated with customer reviews or ratings.
+Before a release, run `pnpm check`, `pnpm test`, `pnpm run build`, responsive preview checks for `/`, `/lookbook`, `/favorites`, and `/policies`, and direct HTML checks for route-specific title/canonical metadata. The Telegram handoff should be tested for URL encoding and correct totals; live carrier tests require provider credentials and must not be simulated with customer reviews or ratings.

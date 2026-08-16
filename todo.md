@@ -150,3 +150,15 @@
 - [x] Verify provider boundaries: payment, carrier rates, verified reviews, OAuth, and analytics.
 - [x] Fix any critical production blockers found by the audit.
 - [x] Write the final 10-point scorecard with evidence and explicit limitations.
+
+# Telegram Order Handoff
+
+- [x] Replace demo checkout CTA and messaging with a polished Telegram order handoff to @eloquncy.
+- [x] Build a safe prefilled order message from cart items, Russian totals, region, and delivery window.
+- [x] Add Telegram handoff tests and verify empty-cart, encoding, accessibility, and responsive behavior.
+- [x] Update policy and operations copy to explain that ordering is completed manually in Telegram, with no online payment collected by the site.
+
+# Telegram Handoff QA Follow-up
+
+- [x] Add an explicit empty-cart guard test and multi-line Telegram payload coverage.
+- [x] Run focused desktop/mobile QA for the cart CTA, keyboard access, drawer behavior, and policy Telegram link.
