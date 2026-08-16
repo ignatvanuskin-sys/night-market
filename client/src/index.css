@@ -508,3 +508,22 @@ body.nm-lightbox-open { overflow:hidden; }
 .nm-drawer-gallery-nav:focus-visible { outline:2px solid var(--orange); outline-offset:3px; }
 @media (max-width:680px) { .nm-drawer-gallery-nav { width:44px; height:44px; } }
 @media (prefers-reduced-motion: reduce) { .nm-drawer-gallery-nav { transition:none; } }
+
+/* Deep-audit recovery surfaces */
+.nm-error-screen { min-height: 100vh; display: grid; place-content: center; gap: 1.15rem; padding: clamp(2rem, 8vw, 7rem) clamp(1.25rem, 6vw, 6rem); background: radial-gradient(circle at 78% 30%, rgba(117, 73, 137, .18), transparent 32%), #0b0a0e; color: #f4efe7; position: relative; overflow: hidden; }
+.nm-error-screen > * { position: relative; z-index: 1; }
+.nm-error-screen .nm-eyebrow { display: inline-flex; align-items: center; gap: .5rem; color: #ff7135; }
+.nm-error-screen h1 { max-width: 12ch; font-size: clamp(3.1rem, 8vw, 8.5rem); line-height: .88; letter-spacing: -.065em; margin: 0; }
+.nm-error-screen h1 i { color: #ff7135; font-family: var(--font-display, Georgia, serif); font-weight: 400; }
+.nm-error-screen > p:not(.nm-eyebrow) { max-width: 34rem; color: rgba(244, 239, 231, .68); line-height: 1.65; }
+.nm-error-actions { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+.nm-error-contact { width: fit-content; color: rgba(244, 239, 231, .52); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
+.nm-error-orbit { position: absolute; width: min(52vw, 42rem); aspect-ratio: 1; right: -12vw; top: 12%; border: 1px solid rgba(255, 113, 53, .18); border-radius: 50%; }
+.nm-error-orbit::before, .nm-error-orbit::after { content: ""; position: absolute; inset: 12%; border: 1px solid rgba(255, 255, 255, .08); border-radius: 50%; }
+.nm-error-orbit span { position: absolute; width: .5rem; height: .5rem; background: #ff7135; border-radius: 50%; left: 13%; top: 22%; box-shadow: 0 0 1.2rem #ff7135; }
+.nm-not-found .nm-header { position: relative; }
+@media (max-width: 640px) { .nm-error-screen { min-height: calc(100vh - 5rem); padding: 4rem 1.25rem; } .nm-error-screen h1 { font-size: clamp(3rem, 16vw, 5rem); } .nm-error-orbit { width: 80vw; right: -38vw; top: 12%; opacity: .6; } .nm-error-actions { align-items: flex-start; flex-direction: column; } }
+
+.nm-newsletter-contact { display: grid; gap: .9rem; max-width: 28rem; align-content: center; }
+.nm-newsletter-contact p { color: rgba(244, 239, 231, .7); line-height: 1.6; max-width: 24rem; }
+.nm-newsletter-contact small { color: rgba(244, 239, 231, .42); font-size: .68rem; line-height: 1.5; }

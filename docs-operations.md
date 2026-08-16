@@ -27,3 +27,12 @@ Integration failures surface as honest empty or unavailable states. Logs must re
 ## Release verification
 
 Before a release, run `pnpm check`, `pnpm test`, `pnpm run build`, responsive preview checks for `/`, `/lookbook`, `/favorites`, and `/policies`, and direct HTML checks for route-specific title/canonical metadata. The Telegram handoff should be tested for URL encoding and correct totals; live carrier tests require provider credentials and must not be simulated with customer reviews or ratings.
+
+
+## Deep-audit release runbook
+
+Before publishing a release, check `/api/health` and confirm the response reports `status: ok` and the expected service name. Open the storefront on desktop and mobile, add one catalog item, open the cart, confirm the regional tariff and final RUB total, enter a sample comment, and exercise the Telegram CTA with navigation intercepted in a non-production preview. Verify that the decoded payload contains only products, quantities, totals, region, delivery window, and the optional comment; never send payment credentials or raw analytics payloads.
+
+For the public release, review browser console and server logs for repeated errors, slow tRPC requests, failed image responses, and provider fallback messages. The current site intentionally uses manual Telegram confirmation, configured Russian tariff fallbacks, and an empty verified-review state. Any future live carrier, review, newsletter, or payment provider must be added behind a bounded server adapter, documented in policies, and covered by a rollback path before activation.
+
+The branded 404 route should be checked with a deliberately unknown URL after each routing change. The global error fallback must show only safe recovery copy to visitors; stack traces may be logged in development for diagnosis but must never be rendered into production HTML.

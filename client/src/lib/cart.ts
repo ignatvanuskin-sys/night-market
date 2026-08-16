@@ -28,3 +28,10 @@ export function readCart<T extends CartProduct>(validProductIds?: ReadonlySet<st
 export function writeCart<T extends CartProduct>(lines: PersistedCartLine<T>[]) {
   try { localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ version: CART_STORAGE_VERSION, lines } satisfies PersistedCart<T>)); } catch { /* Storage may be unavailable; cart remains in memory. */ }
 }
+
+export function upsertCartLine<T extends CartProduct>(lines: PersistedCartLine<T>[], product: T): { lines: PersistedCartLine<T>[]; capped: boolean } {
+  const existing = lines.find((line) => line.product.id === product.id);
+  if (!existing) return { lines: [...lines, { product, quantity: 1 }], capped: false };
+  if (existing.quantity >= product.stock) return { lines, capped: true };
+  return { lines: lines.map((line) => line.product.id === product.id ? { ...line, product, quantity: Math.min(product.stock, line.quantity + 1) } : line), capped: false };
+}

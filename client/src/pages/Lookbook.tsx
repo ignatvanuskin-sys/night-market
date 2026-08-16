@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import ProgressiveImage from "@/components/ProgressiveImage";
 import Lightbox from "@/components/Lightbox";
 import { favoriteProductId, readFavoriteIds, writeFavoriteIds } from "@/lib/favorites";
+import { readCart, upsertCartLine, writeCart } from "@/lib/cart";
 
 // Style reminder: Lookbook extends Occult Luxury Editorial with asymmetric spreads,
 // archival captions, orange commerce signals, and fast object discovery in-place.
@@ -15,7 +16,14 @@ const looks: Look[] = [
   { number: "02", title: "Low flame", note: "Objects that make the air feel considered.", image: assets.category, gallery: [assets.category, assets.nocturne], products: "Black Fig / Ember Ritual", quickTitle: "Black Fig", quickCopy: "A low flame with a fruit-dark finish: fig, clove leaf and wet stone.", price: 2400 },
   { number: "03", title: "A quiet witness", note: "Leave one beautiful thing where it can watch.", image: assets.nocturne, gallery: [assets.nocturne, assets.raven], products: "Nocturne / The Last Séance", quickTitle: "Nocturne", quickCopy: "Hand-finished black ceramic with a soft cotton tie and a quiet point of view.", price: 5600 },
 ];
-const addToLocalCart = (look: Look) => { const product = { id: look.quickTitle.toLowerCase().replaceAll(" ", "-"), title: look.quickTitle, slug: look.quickTitle.toLowerCase().replaceAll(" ", "-"), category: "Lookbook", price: look.price, shortDescription: look.quickCopy, description: look.quickCopy, tags: ["lookbook"], image: look.image, colors: ["#17151b"], stock: 8, featured: false, badge: "lookbook" }; let current: Array<{ product: typeof product; quantity: number }> = []; try { current = JSON.parse(localStorage.getItem("night-market-cart") || "[]"); } catch { current = []; } const exists = current.find((line) => line.product.id === product.id); localStorage.setItem("night-market-cart", JSON.stringify(exists ? current.map((line) => line.product.id === product.id ? { ...line, quantity: line.quantity + 1 } : line) : [...current, { product, quantity: 1 }])); toast.success(`${look.quickTitle} добавлен в корзину`, { description: "Можно продолжить смотреть Lookbook." }); };
+const addToLocalCart = (look: Look) => {
+  const product = { id: look.quickTitle.toLowerCase().replaceAll(" ", "-"), title: look.quickTitle, slug: look.quickTitle.toLowerCase().replaceAll(" ", "-"), category: "Lookbook", price: look.price, shortDescription: look.quickCopy, description: look.quickCopy, tags: ["lookbook"], image: look.image, colors: ["#17151b"], stock: 8, featured: false, badge: "lookbook" };
+  const current = readCart<typeof product>();
+  const result = upsertCartLine(current, product);
+  if (result.capped) { toast.error(`${look.quickTitle} достиг лимита доступного остатка`); return; }
+  writeCart(result.lines);
+  toast.success(`${look.quickTitle} добавлен в корзину`, { description: "Можно продолжить смотреть Lookbook." });
+};
 
 export default function Lookbook() {
   const [quickView, setQuickView] = useState<Look | null>(null);

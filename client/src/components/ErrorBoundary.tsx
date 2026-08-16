@@ -1,5 +1,4 @@
-import { cn } from "@/lib/utils";
-import { AlertTriangle, RotateCcw } from "lucide-react";
+import { ArrowLeft, RotateCcw, AlertTriangle } from "lucide-react";
 import { Component, ReactNode } from "react";
 
 interface Props {
@@ -8,49 +7,35 @@ interface Props {
 
 interface State {
   hasError: boolean;
-  error: Error | null;
 }
 
 class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+  static getDerivedStateFromError(): State {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    if (import.meta.env.DEV) console.error("[NIGHT MARKET] render error", error);
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex items-center justify-center min-h-screen p-8 bg-background">
-          <div className="flex flex-col items-center w-full max-w-2xl p-8">
-            <AlertTriangle
-              size={48}
-              className="text-destructive mb-6 flex-shrink-0"
-            />
-
-            <h2 className="text-xl mb-4">An unexpected error occurred.</h2>
-
-            <div className="p-4 w-full rounded bg-muted overflow-auto mb-6">
-              <pre className="text-sm text-muted-foreground whitespace-break-spaces">
-                {this.state.error?.stack}
-              </pre>
-            </div>
-
-            <button
-              onClick={() => window.location.reload()}
-              className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-lg",
-                "bg-primary text-primary-foreground",
-                "hover:opacity-90 cursor-pointer"
-              )}
-            >
-              <RotateCcw size={16} />
-              Reload Page
-            </button>
+        <div className="nm-error-screen" role="alert">
+          <div className="nm-error-orbit" aria-hidden="true"><span /></div>
+          <p className="nm-eyebrow"><AlertTriangle size={14} /> NIGHT MARKET / AFTER DARK</p>
+          <h1>Something went<br /><i>off-script.</i></h1>
+          <p>Эта страница временно недоступна. Вернитесь в каталог или попробуйте открыть её ещё раз.</p>
+          <div className="nm-error-actions">
+            <a className="nm-cta" href="/">Вернуться в каталог <ArrowLeft size={17} /></a>
+            <button className="nm-underlink" onClick={() => window.location.reload()}><RotateCcw size={15} /> Обновить страницу</button>
           </div>
+          <a className="nm-error-contact" href="https://t.me/eloquncy" target="_blank" rel="noreferrer">Если нужна помощь — @eloquncy</a>
         </div>
       );
     }
@@ -60,3 +45,4 @@ class ErrorBoundary extends Component<Props, State> {
 }
 
 export default ErrorBoundary;
+

@@ -195,3 +195,21 @@
 # Telegram Reduced-Motion QA Seam
 
 - [x] Add a development-only reduced-motion override query for deterministic browser verification, then remove it before the production checkpoint.
+
+# Deep Production and Product Audit
+
+- [x] Audit storefront UX, conversion path, catalog discovery, cart, Telegram handoff, and trust signals.
+- [x] Audit mobile/responsive behavior, keyboard accessibility, reduced motion, semantic structure, and focus management.
+- [x] Audit SEO, metadata, structured data, image delivery, bundle size, runtime errors, security boundaries, and operational readiness.
+- [x] Produce a prioritized improvement backlog with severity, impact, effort, and implementation order.
+- [x] Implement the approved high-impact improvements from the backlog.
+- [x] Add regression tests and execute final preview, production, and live-surface validation.
+- [x] Publish the improved release and update the deep-audit report with score changes and remaining limitations.
+
+# Deep Audit Implementation Pass
+
+- [x] P0-01 Add a branded final fallback route for unknown URLs.
+- [x] P0-02 Replace raw stack traces and generic error copy with a safe branded error boundary.
+- [x] P0-03 Move Lookbook quick-view cart writes to the versioned, stock-aware cart helper.
+- [x] P1-01 Make newsletter confirmation truthful without claiming an unimplemented subscription.
+- [x] P2-03 Add an actionable operations runbook for health, Telegram handoff, and error review.

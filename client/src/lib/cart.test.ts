@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { CART_STORAGE_KEY, readCart, writeCart } from "./cart";
+import { CART_STORAGE_KEY, readCart, upsertCartLine, writeCart } from "./cart";
 
 type Product = { id: string; stock: number; title: string };
 const storage = new Map<string, string>();
@@ -24,5 +24,17 @@ describe("cart persistence", () => {
   it("drops malformed and zero-quantity lines safely", () => {
     storage.set(CART_STORAGE_KEY, JSON.stringify([{ product: null, quantity: 2 }, { product: { id: "x", stock: 3 }, quantity: 0 }]));
     expect(readCart<Product>()).toEqual([]);
+  });
+  it("upserts a product while refreshing its record and respecting stock", () => {
+    const first = { id: "raven-hour", stock: 2, title: "Raven Hour" } satisfies Product;
+    const refreshed = { ...first, title: "Raven Hour / refreshed" };
+    const added = upsertCartLine([], first);
+    expect(added.lines[0]?.quantity).toBe(1);
+    const incremented = upsertCartLine(added.lines, refreshed);
+    expect(incremented.lines[0]?.quantity).toBe(2);
+    expect(incremented.lines[0]?.product.title).toContain("refreshed");
+    const capped = upsertCartLine(incremented.lines, refreshed);
+    expect(capped.capped).toBe(true);
+    expect(capped.lines[0]?.quantity).toBe(2);
   });
 });
