@@ -141,3 +141,12 @@
 
 - [x] Extract and test the actual catalog price, size, and popularity filtering/sorting logic in `client/src/lib/catalog.ts` with direct unit coverage.
 - [x] Run a real keyboard audit of catalog filter selects: price select received focus, ArrowDown changed it to `Under 3 000 ₽`, and the live catalog count updated to 03 objects; evidence is in `qa-catalog-notes.md`.
+
+# Final Production Audit
+
+- [x] Verify deployed domain, health endpoint, route status, asset loading, and public metadata.
+- [x] Run final typecheck, full tests, production build, and inspect runtime logs.
+- [x] Audit accessibility, responsive behavior, performance boundaries, security, SEO, and Russian-market copy.
+- [x] Verify provider boundaries: payment, carrier rates, verified reviews, OAuth, and analytics.
+- [x] Fix any critical production blockers found by the audit.
+- [x] Write the final 10-point scorecard with evidence and explicit limitations.
