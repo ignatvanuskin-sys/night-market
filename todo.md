@@ -54,3 +54,8 @@
 - [x] Replace remaining Home brand, mobile-menu, and cart-drawer images with ProgressiveImage.
 - [x] Verify delayed/loading, broken-image, and loaded states on the temporary diagnostics route; the broken URL showed `Image unavailable`, the delayed case showed the loading bar, and reduced-motion fallback is encoded in the CSS contract.
 - [x] Capture post-change Home and Lookbook screenshots at desktop and mobile breakpoints after the aspect-ratio fix.
+
+- [x] Add reusable click-to-zoom lightbox behavior for product and Lookbook imagery.
+- [x] Add modern AVIF/WebP picture sources and responsive srcset/sizes while preserving progressive loading and fallbacks.
+- [x] Add persistent product favorites with accessible controls and a header counter.
+- [x] Verify keyboard focus/Escape behavior, responsive layouts, image delivery markup, tests, and production build.
