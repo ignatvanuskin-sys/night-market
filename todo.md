@@ -213,3 +213,13 @@
 - [x] P0-03 Move Lookbook quick-view cart writes to the versioned, stock-aware cart helper.
 - [x] P1-01 Make newsletter confirmation truthful without claiming an unimplemented subscription.
 - [x] P2-03 Add an actionable operations runbook for health, Telegram handoff, and error review.
+
+# Russian UX and Product Detail Expansion
+
+- [x] Inventory all remaining user-facing English labels, statuses, button text, metadata, and accessibility labels.
+- [x] Translate remaining storefront, Lookbook, Favorites, Policies, cart, search, filters, review, loading, and error UI into Russian while preserving product names and editorial titles where intentional.
+- [x] Add a transparent order-preview modal before opening Telegram, including items, quantities, RUB totals, delivery region/window, discount, comment, and edit/back action.
+- [x] Add regression coverage for preview totals, empty-cart guard, and Telegram handoff only after confirmation.
+- [x] Create individual product detail routes for every catalog product with gallery, description, stock, sizes, delivery, review state, favorite, add-to-cart, and Telegram-ready cart action.
+- [x] Add route-aware product metadata, canonical URLs, and structured product information without inventing reviews or availability claims.
+- [x] Validate mobile/desktop UI, keyboard focus, route recovery, localization scan, typecheck, tests, and production build.

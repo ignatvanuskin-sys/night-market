@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import Policies from "./pages/Policies";
 import NotFound from "./pages/NotFound";
+import Product from "./pages/Product";
 const Lookbook = lazy(() => import("./pages/Lookbook"));
 
 // Style reminder: NIGHT MARKET uses Occult Luxury Editorial — near-black gallery space,
@@ -43,6 +44,7 @@ function RouteShell() {
             <Route path="/lookbook" component={Lookbook} />
             <Route path="/favorites" component={Favorites} />
             <Route path="/policies" component={Policies} />
+            <Route path="/product/:slug" component={Product} />
             <Route path="/" component={Home} />
             <Route component={NotFound} />
           </Switch></Suspense>
