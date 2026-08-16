@@ -64,7 +64,7 @@
 
 ## Product discovery and commerce UX
 - [x] Add a dedicated Favorites page with saved products, remove actions, quick add, empty state, and cross-route persistence.
-- [x] Add a reusable full product-gallery lightbox model with previous/next navigation; current catalog records expose one verified media item until additional source assets are supplied.
+- [x] Add a reusable full product-gallery lightbox model with previous/next navigation and wire verified gallery arrays into Home and Lookbook records.
 - [x] Add cart persistence versioning, live-catalog stale-product reconciliation, quantity validation, and a clear-cart action.
 - [x] Add a checkout-ready cart summary with subtotal, bundle discount, regional delivery, free-shipping state, total context, and explicit demo-payment messaging.
 - [x] Add Russian tariff labels, region-specific delivery windows, free-shipping threshold copy, and provider-boundary documentation.
@@ -73,7 +73,7 @@
 
 ## Accessibility and interaction quality
 - [x] Audit semantic landmarks, heading hierarchy, labels, focus order, and keyboard reachability across Home, Lookbook, Favorites, and policies in preview.
-- [x] Add focus trapping and focus restoration for lightboxes; drawers and quick views remain a follow-up.
+- [x] Add focus trapping and focus restoration for lightboxes and quick-view drawers, including Escape close and trigger restoration.
 - [x] Preserve visible focus styles and reduced-motion coverage across the new gallery, cart, policy, and favorites interactions.
 - [x] Ensure mobile navigation, filters, favorite controls, cart controls, and image controls meet 44px touch-target requirements.
 - [x] Add accessible toast/live feedback for favorites, cart clearing, shipping celebration, and demo checkout states.
@@ -128,3 +128,16 @@
 
 - [x] Exercise the natural-language search failure path in the live preview; the rendered status became `Серверный подбор недоступен — локальный поиск продолжает работать.` while the query remained active.
 - [x] Verify the public OAuth boundary uses only `VITE_OAUTH_PORTAL_URL`, `/api/health` returns `status: ok`, and the production client bundle contains none of the server secret names.
+
+- [x] Add catalog filters for price range and available size, plus popularity sorting.
+- [x] Enhance catalog quick view with accessible product details, gallery, size metadata, add-to-cart, and close/focus behavior.
+- [x] Add a per-product review/rating block using verified-provider data or an explicit empty state without fabricated customer content.
+- [x] Add tests and verify keyboard, responsive, loading/error, and production-build behavior for the catalog update.
+
+- [x] Add focus management and restoration for the product quick-view drawer; focus enters `Close product` and returns to the triggering control.
+- [x] Add visible previous/next gallery navigation inside the quick-view drawer with keyboard arrow support and an image count.
+- [x] Add focused catalog tests for size defaults, explicit size metadata, price filtering, size filtering, popularity ordering, and truthful review empty state.
+- [x] Run and record a keyboard-oriented audit: quick view focuses Close product, exposes gallery controls, closes with Escape, and restores trigger focus; native filter selects remain keyboard reachable.
+
+- [x] Extract and test the actual catalog price, size, and popularity filtering/sorting logic in `client/src/lib/catalog.ts` with direct unit coverage.
+- [x] Run a real keyboard audit of catalog filter selects: price select received focus, ArrowDown changed it to `Under 3 000 ₽`, and the live catalog count updated to 03 objects; evidence is in `qa-catalog-notes.md`.
