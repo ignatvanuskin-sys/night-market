@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowDownRight, Check, ChevronDown, Filter, Heart, Menu, Minus, Plus, Search, Share2, ShoppingBag, Sparkles, X } from "lucide-react";
 import { toast } from "sonner";
@@ -43,6 +44,13 @@ const naturalSynonyms: Record<string, string[]> = { moody: ["after dark", "occul
 const expandNaturalQuery = (query: string) => Array.from(new Set(query.toLowerCase().split(/\s+/).filter(Boolean).flatMap((token) => [token, ...(naturalSynonyms[token] || [])])));
 
 export default function Home() {
+  // The useAuth hook provides authentication state.
+  // To implement login/logout, call logout(), or start login from an event
+  // handler: onClick={() => startLogin()} (imported from "@/const"). Never call
+  // startLogin() during render (no href={startLogin()}) — it mints a one-time
+  // nonce cookie and must run only at the moment of navigation.
+  let { user, loading, error, isAuthenticated, logout } = useAuth();
+
   const [query, setQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const [suggestionIndex, setSuggestionIndex] = useState(-1);

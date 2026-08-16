@@ -11,6 +11,7 @@ const Lookbook = lazy(() => import("./pages/Lookbook"));
 // asymmetrical commerce composition, restrained Ember Orange signals, and readable dark UI.
 function RouteShell() {
   const [location] = useLocation();
+  // make sure to consider if you need authentication for certain routes
   return (
     <AnimatePresence mode="wait">
       <motion.div key={location} className="nm-route-shell" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}>

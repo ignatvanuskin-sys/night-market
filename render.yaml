@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: night-market
+    runtime: node
+    plan: free
+    region: ohio
+    branch: main
+    autoDeploy: true
+    buildCommand: pnpm install --frozen-lockfile && pnpm check && pnpm run build
+    startCommand: pnpm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_APP_TITLE
+        value: NIGHT MARKET
+      - key: JWT_SECRET
+        generateValue: true
