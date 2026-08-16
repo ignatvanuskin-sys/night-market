@@ -7,4 +7,11 @@ export const ENV = {
   isProduction: process.env.NODE_ENV === "production",
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
+  nlpApiUrl: process.env.NLP_API_BASE_URL ?? "",
+  nlpApiKey: process.env.NLP_API_KEY ?? "",
+  reviewsProvider: process.env.REVIEWS_PROVIDER ?? "",
+  reviewsApiUrl: process.env.REVIEWS_API_BASE_URL ?? "",
+  reviewsApiToken: process.env.REVIEWS_API_TOKEN ?? "",
+  reviewsStoreDomain: process.env.REVIEWS_STORE_DOMAIN ?? "",
+  freeShippingThreshold: Number(process.env.FREE_SHIPPING_THRESHOLD ?? 120),
 };

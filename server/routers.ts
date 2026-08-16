@@ -2,6 +2,8 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
+import { z } from "zod";
+import { calculateShipping, getVerifiedReviews, naturalLanguageSearch } from "./integrations";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -15,6 +17,18 @@ export const appRouter = router({
         success: true,
       } as const;
     }),
+  }),
+
+  discovery: router({
+    naturalLanguageSearch: publicProcedure
+      .input(z.object({ query: z.string().trim().min(1).max(500) }))
+      .query(({ input }) => naturalLanguageSearch(input.query)),
+    reviews: publicProcedure
+      .input(z.object({ productId: z.string().trim().min(1).max(100) }))
+      .query(({ input }) => getVerifiedReviews(input.productId)),
+    shippingQuote: publicProcedure
+      .input(z.object({ region: z.enum(["EU", "UK", "US", "OTHER"]), subtotal: z.number().finite().min(0).max(100000) }))
+      .query(({ input }) => calculateShipping(input.region, input.subtotal)),
   }),
 
   // TODO: add feature routers here, e.g.
