@@ -1,7 +1,7 @@
 # NIGHT MARKET expansion tasks
 
-- [ ] Add one-click full-look bundle to the product drawer with a transparent special discount and subtotal presentation.
-- [ ] Add quick view overlays for Lookbook objects on hover/focus without leaving the Lookbook route.
-- [ ] Add style and theme metadata to products, plus multi-select catalog filters and fast clear behavior.
-- [ ] Add catalog sorting by relevance, newest, price, and curated style/theme match.
-- [ ] Verify desktop/mobile hover fallback, keyboard focus, reduced motion, cart persistence, and production build.
+- [ ] Persist assembled looks in favorites with a clear saved state and remove action.
+- [ ] Generate unique share links for saved looks and support navigator share, clipboard, and social fallbacks.
+- [ ] Add quick add-to-cart directly inside Lookbook quick view without leaving the route.
+- [ ] Add a prominent but brand-consistent discount-applied animation after one-click bundle addition.
+- [ ] Verify local persistence, share fallbacks, keyboard interaction, reduced motion, mobile layout, and production build.

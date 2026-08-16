@@ -235,3 +235,27 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
 .nm-quick-view .nm-cta { justify-content:space-between; width:100%; }
 @media (max-width:1024px) { .nm-filters { gap:14px; } .nm-filters label { flex-wrap:wrap; } }
 @media (max-width:680px) { .nm-filters { gap:15px; flex-wrap:wrap; } .nm-filters label { min-width:calc(50% - 8px); flex-wrap:nowrap; } .nm-filters label select { max-width:92px; } .nm-clear-filters { margin-top:5px; } .nm-look-quick { display:none; } .nm-look-quick-mobile { position:absolute; display:flex; align-items:center; gap:7px; right:12px; bottom:12px; padding:9px 11px; background:var(--orange); color:var(--bg); font:500 9px var(--mono); text-transform:uppercase; } .nm-quick-overlay { padding:12px; } .nm-quick-view { display:block; max-height:92vh; overflow-y:auto; } .nm-quick-view>img { min-height:260px; height:44vh; } .nm-quick-view>div { padding:27px 22px 30px; } .nm-quick-view h2 { font-size:3rem; } }
+
+/* Saved-look sharing and discount celebration layer. */
+.nm-build-actions { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:15px; }
+.nm-build-actions .nm-build-add { grid-column:span 2; margin-top:0; }
+.nm-build-secondary,.nm-quick-secondary { display:flex; align-items:center; justify-content:center; gap:7px; min-height:36px; padding:9px 8px; border:1px solid var(--line); background:transparent; color:var(--muted); font:500 9px var(--mono); text-transform:uppercase; letter-spacing:.07em; }
+.nm-build-secondary:hover,.nm-quick-secondary:hover,.nm-build-secondary.is-saved,.nm-quick-secondary.is-saved { color:var(--lime); border-color:rgba(216,255,84,.55); background:rgba(216,255,84,.05); }
+.nm-discount-celebration { position:fixed; inset:0; z-index:95; display:grid; place-items:center; pointer-events:none; background:radial-gradient(circle at center,rgba(255,107,34,.13),transparent 22rem); animation:nm-celebration-in .28s ease both; }
+.nm-discount-ring { position:absolute; width:260px; height:260px; border:1px solid rgba(255,107,34,.75); border-radius:50%; box-shadow:0 0 0 25px rgba(255,107,34,.04),0 0 90px rgba(255,107,34,.22); animation:nm-ring-expand 1.8s cubic-bezier(.23,1,.32,1) both; }
+.nm-discount-ring:before,.nm-discount-ring:after { content:""; position:absolute; inset:27px; border:1px dashed rgba(216,255,84,.5); border-radius:50%; animation:nm-spin 9s linear infinite; }
+.nm-discount-ring:after { inset:53px; border-style:solid; border-color:rgba(255,107,34,.3) transparent; animation-direction:reverse; }
+.nm-discount-copy { position:relative; display:flex; flex-direction:column; align-items:center; gap:7px; text-align:center; color:var(--ink); animation:nm-discount-pop .55s cubic-bezier(.23,1,.32,1) .08s both; }
+.nm-discount-copy svg { color:var(--lime); filter:drop-shadow(0 0 10px rgba(216,255,84,.7)); }
+.nm-discount-copy span,.nm-discount-copy small { font:500 10px var(--mono); text-transform:uppercase; letter-spacing:.16em; }
+.nm-discount-copy small { color:var(--muted); letter-spacing:.09em; }
+.nm-discount-copy strong { color:var(--orange); font:700 76px/.8 var(--display); letter-spacing:-.1em; text-shadow:0 0 35px rgba(255,107,34,.4); }
+.nm-quick-actions { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:18px; }
+.nm-quick-actions .nm-cta { grid-column:span 2; width:100%; justify-content:space-between; }
+.nm-quick-open { font-size:10px; }
+@keyframes nm-celebration-in { from { opacity:0; } to { opacity:1; } }
+@keyframes nm-discount-pop { from { opacity:0; transform:scale(.72) translateY(12px); } 60% { transform:scale(1.06); } to { opacity:1; transform:none; } }
+@keyframes nm-ring-expand { from { opacity:0; transform:scale(.55) rotate(-20deg); } 30% { opacity:1; } to { opacity:.2; transform:scale(1.35) rotate(40deg); } }
+@keyframes nm-spin { to { transform:rotate(360deg); } }
+@media (max-width:680px) { .nm-build-actions { grid-template-columns:1fr; } .nm-build-actions .nm-build-add { grid-column:auto; } .nm-quick-actions { grid-template-columns:1fr; } .nm-quick-actions .nm-cta { grid-column:auto; } .nm-discount-ring { width:220px; height:220px; } .nm-discount-copy strong { font-size:64px; } }
+@media (prefers-reduced-motion:reduce) { .nm-discount-ring:before,.nm-discount-ring:after { animation:none; } }
