@@ -51,12 +51,12 @@ export default function Home() {
   });
   const [cartOpen, setCartOpen] = useState(false);
   const [cartPulse, setCartPulse] = useState(false);
-  const [bundleActive, setBundleActive] = useState(() => localStorage.getItem("night-market-bundle") === "true");
+  const [bundleProductIds, setBundleProductIds] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem("night-market-bundle-ids") || "[]"); } catch { return []; } });
   const [savedLooks, setSavedLooks] = useState<SavedLook[]>(() => { try { return JSON.parse(localStorage.getItem("night-market-saved-looks") || "[]"); } catch { return []; } });
   const [discountCelebration, setDiscountCelebration] = useState(false);
 
   useEffect(() => { localStorage.setItem("night-market-cart", JSON.stringify(cart)); }, [cart]);
-  useEffect(() => { localStorage.setItem("night-market-bundle", String(bundleActive)); }, [bundleActive]);
+  useEffect(() => { localStorage.setItem("night-market-bundle-ids", JSON.stringify(bundleProductIds)); }, [bundleProductIds]);
   useEffect(() => { localStorage.setItem("night-market-saved-looks", JSON.stringify(savedLooks)); }, [savedLooks]);
   useEffect(() => {
     const escape = (event: KeyboardEvent) => { if (event.key === "Escape") { setSelected(null); setCartOpen(false); setMenuOpen(false); setFiltersOpen(false); } };
@@ -77,6 +77,7 @@ export default function Home() {
   }, [query, category, style, theme, sort]);
   const cartCount = cart.reduce((sum, line) => sum + line.quantity, 0);
   const subtotal = cart.reduce((sum, line) => sum + line.product.price * line.quantity, 0);
+  const bundleActive = bundleProductIds.length > 1 && bundleProductIds.every((id) => cart.some((line) => line.product.id === id));
   const discountedSubtotal = bundleActive ? subtotal * 0.9 : subtotal;
 
   const addToCart = (product: Product) => {
@@ -86,7 +87,7 @@ export default function Home() {
     setSelected(null); setCartOpen(true);
   };
   const changeQuantity = (id: string, delta: number) => setCart((current) => current.map((line) => line.product.id === id ? { ...line, quantity: Math.max(0, line.quantity + delta) } : line).filter((line) => line.quantity));
-  const addBundleToCart = (items: Product[]) => { items.forEach((item) => setCart((current) => { const exists = current.find((line) => line.product.id === item.id); return exists ? current.map((line) => line.product.id === item.id ? { ...line, quantity: line.quantity + 1 } : line) : [...current, { product: item, quantity: 1 }]; })); setBundleActive(true); setDiscountCelebration(true); window.setTimeout(() => setDiscountCelebration(false), 1800); setCartPulse(true); window.setTimeout(() => setCartPulse(false), 520); setSelected(null); setCartOpen(true); toast.success("Образ добавлен со скидкой 10%", { description: "Скидка применена к полной подборке в корзине." }); };
+  const addBundleToCart = (items: Product[]) => { items.forEach((item) => setCart((current) => { const exists = current.find((line) => line.product.id === item.id); return exists ? current.map((line) => line.product.id === item.id ? { ...line, quantity: line.quantity + 1 } : line) : [...current, { product: item, quantity: 1 }]; })); setBundleProductIds(items.map((item) => item.id)); setDiscountCelebration(true); window.setTimeout(() => setDiscountCelebration(false), 1800); setCartPulse(true); window.setTimeout(() => setCartPulse(false), 520); setSelected(null); setCartOpen(true); toast.success("Образ добавлен со скидкой 10%", { description: "Скидка применена к полной подборке в корзине." }); };
   const saveLook = (items: Product[]) => { const productIds = items.map((item) => item.id); const id = `look-${productIds.join("-")}`; setSavedLooks((current) => current.some((look) => look.id === id) ? current.filter((look) => look.id !== id) : [...current, { id, title: `${items[0].title} / after dark`, productIds, createdAt: Date.now() }]); toast.success(savedLooks.some((look) => look.id === id) ? "Образ удалён из избранного" : "Образ сохранён в избранное"); };
   const shareLook = async (items: Product[]) => { const ids = items.map((item) => item.id).join(","); const url = `${window.location.origin}/?look=${encodeURIComponent(ids)}`; try { if (navigator.share) await navigator.share({ title: "NIGHT MARKET — собранный образ", text: "Посмотри этот образ в NIGHT MARKET", url }); else { await navigator.clipboard.writeText(url); toast.success("Уникальная ссылка скопирована", { description: url }); return; } toast.success("Образ готов к sharing"); } catch { await navigator.clipboard?.writeText(url); toast.success("Ссылка скопирована", { description: url }); } };
   const scrollToCatalog = () => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });

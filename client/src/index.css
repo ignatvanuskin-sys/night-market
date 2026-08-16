@@ -259,3 +259,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
 @keyframes nm-spin { to { transform:rotate(360deg); } }
 @media (max-width:680px) { .nm-build-actions { grid-template-columns:1fr; } .nm-build-actions .nm-build-add { grid-column:auto; } .nm-quick-actions { grid-template-columns:1fr; } .nm-quick-actions .nm-cta { grid-column:auto; } .nm-discount-ring { width:220px; height:220px; } .nm-discount-copy strong { font-size:64px; } }
 @media (prefers-reduced-motion:reduce) { .nm-discount-ring:before,.nm-discount-ring:after { animation:none; } }
+
+/* Production accessibility: keyboard users get an immediate route into the main content. */
+.nm-skip-link { position:fixed; left:16px; top:12px; z-index:200; padding:10px 13px; background:var(--orange); color:var(--bg); font:600 11px var(--mono); text-transform:uppercase; transform:translateY(-160%); transition:transform .2s ease; }
+.nm-skip-link:focus { transform:none; outline:2px solid var(--ink); outline-offset:3px; }
+
+.nm-route-loading { min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--orange); font:500 11px var(--mono); text-transform:uppercase; letter-spacing:.14em; }

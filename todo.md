@@ -1,7 +1,8 @@
-# NIGHT MARKET expansion tasks
+# NIGHT MARKET production hardening
 
-- [ ] Persist assembled looks in favorites with a clear saved state and remove action.
-- [ ] Generate unique share links for saved looks and support navigator share, clipboard, and social fallbacks.
-- [ ] Add quick add-to-cart directly inside Lookbook quick view without leaving the route.
-- [ ] Add a prominent but brand-consistent discount-applied animation after one-click bundle addition.
-- [ ] Verify local persistence, share fallbacks, keyboard interaction, reduced motion, mobile layout, and production build.
+- [ ] Audit current source, routes, state persistence, metadata, and build output.
+- [ ] Harden cart, bundle discount, saved-look persistence, sharing fallbacks, and cross-route state behavior.
+- [ ] Improve keyboard semantics, modal focus/escape behavior, labels, reduced-motion handling, and responsive edge cases.
+- [ ] Improve SEO metadata, favicon/robots coverage, image loading strategy, and production configuration.
+- [ ] Run typecheck, production build, desktop/mobile visual checks, and inspect browser/runtime errors.
+- [ ] Save a stable production checkpoint and document remaining external integration requirements.
