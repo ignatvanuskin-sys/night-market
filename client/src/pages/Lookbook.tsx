@@ -5,7 +5,7 @@ import { Link } from "wouter";
 
 // Style reminder: Lookbook extends Occult Luxury Editorial with asymmetric spreads,
 // archival captions, orange commerce signals, and fast object discovery in-place.
-const assets = { hero: "/manus-storage/night-market-hero_f5d5047d.jpg", category: "/manus-storage/night-market-category_bc40db77.jpg", raven: "/manus-storage/night-market-product-raven-hour_c3eb603d.jpg", nocturne: "/manus-storage/night-market-product-nocturne_8fe1c6d0.jpg", mark: "/manus-storage/night-market-mark_d2015167.png" };
+const assets = { hero: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663894363217/XgTNBfpPRvrnTFPr.jpg", category: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663894363217/lCrSqnLAXFKXmWXd.jpg", raven: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663894363217/RCOUOqqGlNukXVjv.jpg", nocturne: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663894363217/lJJsOdgSMDOjJmdQ.jpg", mark: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663894363217/FcXuAAsdOxmisWCl.png" };
 type Look = { number: string; title: string; note: string; image: string; products: string; quickTitle: string; quickCopy: string; price: number };
 const looks: Look[] = [
   { number: "01", title: "The threshold", note: "A silhouette for rooms that keep their own hours.", image: assets.raven, products: "Raven Hour / Acid Moon", quickTitle: "Raven Hour", quickCopy: "Heavy matte cotton, hidden satin lining, and an architectural hood.", price: 88 },

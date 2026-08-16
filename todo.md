@@ -22,6 +22,6 @@
 - [x] Remove or configure the Umami analytics script so production builds contain no undefined VITE analytics placeholders.
 - [ ] Rebuild and verify the live Render runtime after the configuration cleanup.
 
-- [ ] Diagnose why all production image URLs fail on Render and identify the exact missing asset paths.
-- [ ] Move image assets to deploy-safe storage or a committed public asset strategy and update all product/Lookbook references.
-- [ ] Verify image HTTP responses and visual rendering on the live Render home and Lookbook routes.
+- [x] Diagnose why all production image URLs fail on Render and identify the exact missing asset paths.
+- [x] Move image assets to deploy-safe storage or a committed public asset strategy and update all product/Lookbook references.
+- [x] Verify image HTTP responses and live Render home route after redeploy; CDN image endpoints return HTTP 200 with image content.
