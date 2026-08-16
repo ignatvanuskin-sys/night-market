@@ -17,7 +17,7 @@ describe("integration fallbacks", () => {
   });
 
   it("calculates regional shipping and free-shipping progress", () => {
-    expect(calculateShipping("RU_CENTRAL", 5000)).toMatchObject({ shipping: 399, freeShipping: false, remaining: 5000, currency: "RUB" });
-    expect(calculateShipping("RU_MOSCOW", 10000)).toMatchObject({ shipping: 0, freeShipping: true, remaining: 0, currency: "RUB" });
+    expect(calculateShipping("RU_CENTRAL", 5000)).toMatchObject({ shipping: 399, freeShipping: false, remaining: 5000, currency: "RUB", label: "Центральный округ" });
+    expect(calculateShipping("RU_MOSCOW", 10000)).toMatchObject({ shipping: 0, freeShipping: true, remaining: 0, currency: "RUB", label: "Москва и область" });
   });
 });

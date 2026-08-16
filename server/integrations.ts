@@ -136,20 +136,14 @@ export type ShippingRegion = "RU_MOSCOW" | "RU_CENTRAL" | "RU_NORTHWEST" | "RU_S
 
 // Merchant-configurable domestic delivery tariffs in RUB. These are transparent fallback tariffs,
 // not live carrier quotes; replace them with a carrier/Shopify rate source when credentials are available.
-const defaultShippingRates: Record<ShippingRegion, number> = {
-  RU_MOSCOW: 299,
-  RU_CENTRAL: 399,
-  RU_NORTHWEST: 499,
-  RU_SOUTH: 499,
-  RU_VOLGA: 499,
-  RU_URAL: 699,
-  RU_SIBERIA: 799,
-  RU_FAR_EAST: 999,
-};
+const defaultShippingRates: Record<ShippingRegion, number> = { RU_MOSCOW: 299, RU_CENTRAL: 399, RU_NORTHWEST: 499, RU_SOUTH: 499, RU_VOLGA: 499, RU_URAL: 699, RU_SIBERIA: 799, RU_FAR_EAST: 999 };
+const shippingRegionLabels: Record<ShippingRegion, string> = { RU_MOSCOW: "Москва и область", RU_CENTRAL: "Центральный округ", RU_NORTHWEST: "Северо-Запад", RU_SOUTH: "Юг России", RU_VOLGA: "Поволжье", RU_URAL: "Урал", RU_SIBERIA: "Сибирь", RU_FAR_EAST: "Дальний Восток" };
+const configuredShippingRates: Partial<Record<ShippingRegion, number>> = (() => { try { const parsed = JSON.parse(process.env.SHIPPING_RATES_RUB ?? "{}"); return Object.fromEntries(Object.entries(parsed).filter(([key, value]) => key in defaultShippingRates && typeof value === "number" && Number.isFinite(value) && value >= 0)) as Partial<Record<ShippingRegion, number>>; } catch { return {}; } })();
+const shippingRates = { ...defaultShippingRates, ...configuredShippingRates };
 
 export function calculateShipping(region: ShippingRegion, subtotal: number) {
   const threshold = ENV.freeShippingThreshold;
-  const rate = defaultShippingRates[region] ?? defaultShippingRates.RU_CENTRAL;
+  const rate = shippingRates[region] ?? shippingRates.RU_CENTRAL;
   const free = subtotal >= threshold;
-  return { region, subtotal, shipping: free ? 0 : rate, freeShipping: free, threshold, remaining: Math.max(0, threshold - subtotal), currency: "RUB" as const };
+  return { region, label: shippingRegionLabels[region] ?? shippingRegionLabels.RU_CENTRAL, subtotal, shipping: free ? 0 : rate, freeShipping: free, threshold, remaining: Math.max(0, threshold - subtotal), currency: "RUB" as const };
 }
