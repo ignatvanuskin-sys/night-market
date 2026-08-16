@@ -17,11 +17,11 @@ const verifiedReviews: Record<string, Review[]> = {}; // Populate only from trus
 const FREE_SHIPPING_THRESHOLD = 120;
 
 const ASSETS = {
-  hero: "/manus-storage/night-market-hero_485b5b3c.jpg",
-  category: "/manus-storage/night-market-category_8cf4445d.jpg",
-  raven: "/manus-storage/night-market-product-raven-hour_a1841730.jpg",
-  nocturne: "/manus-storage/night-market-product-nocturne_5122c3a8.jpg",
-  mark: "/manus-storage/night-market-mark_021c3289.png",
+  hero: "/manus-storage/night-market-hero_f5d5047d.jpg",
+  category: "/manus-storage/night-market-category_bc40db77.jpg",
+  raven: "/manus-storage/night-market-product-raven-hour_c3eb603d.jpg",
+  nocturne: "/manus-storage/night-market-product-nocturne_8fe1c6d0.jpg",
+  mark: "/manus-storage/night-market-mark_d2015167.png",
 };
 
 const products: Product[] = [

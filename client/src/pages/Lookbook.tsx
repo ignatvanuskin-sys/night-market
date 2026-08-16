@@ -5,7 +5,7 @@ import { Link } from "wouter";
 
 // Style reminder: Lookbook extends Occult Luxury Editorial with asymmetric spreads,
 // archival captions, orange commerce signals, and fast object discovery in-place.
-const assets = { hero: "/manus-storage/night-market-hero_485b5b3c.jpg", category: "/manus-storage/night-market-category_8cf4445d.jpg", raven: "/manus-storage/night-market-product-raven-hour_a1841730.jpg", nocturne: "/manus-storage/night-market-product-nocturne_5122c3a8.jpg", mark: "/manus-storage/night-market-mark_021c3289.png" };
+const assets = { hero: "/manus-storage/night-market-hero_f5d5047d.jpg", category: "/manus-storage/night-market-category_bc40db77.jpg", raven: "/manus-storage/night-market-product-raven-hour_c3eb603d.jpg", nocturne: "/manus-storage/night-market-product-nocturne_8fe1c6d0.jpg", mark: "/manus-storage/night-market-mark_d2015167.png" };
 type Look = { number: string; title: string; note: string; image: string; products: string; quickTitle: string; quickCopy: string; price: number };
 const looks: Look[] = [
   { number: "01", title: "The threshold", note: "A silhouette for rooms that keep their own hours.", image: assets.raven, products: "Raven Hour / Acid Moon", quickTitle: "Raven Hour", quickCopy: "Heavy matte cotton, hidden satin lining, and an architectural hood.", price: 88 },

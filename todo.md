@@ -17,3 +17,11 @@
 
 - [x] Verify the production server with an explicit non-default `PORT=10000`.
 - [ ] Trigger a Render redeploy from commit `adc598a` and confirm the deployment succeeds.
+
+- [x] Add the correct OAuth server configuration for the deployed Render origin, or explicitly disable auth initialization when auth is not part of the public storefront deployment.
+- [x] Remove or configure the Umami analytics script so production builds contain no undefined VITE analytics placeholders.
+- [ ] Rebuild and verify the live Render runtime after the configuration cleanup.
+
+- [ ] Diagnose why all production image URLs fail on Render and identify the exact missing asset paths.
+- [ ] Move image assets to deploy-safe storage or a committed public asset strategy and update all product/Lookbook references.
+- [ ] Verify image HTTP responses and visual rendering on the live Render home and Lookbook routes.
