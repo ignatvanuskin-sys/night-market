@@ -25,3 +25,17 @@
 - [x] Diagnose why all production image URLs fail on Render and identify the exact missing asset paths.
 - [x] Move image assets to deploy-safe storage or a committed public asset strategy and update all product/Lookbook references.
 - [x] Verify image HTTP responses and live Render home route after redeploy; CDN image endpoints return HTTP 200 with image content.
+
+- [x] Deploy GitHub commit `8250249` to Render and verify build/runtime health.
+- [ ] Confirm supported shipping regions, currency, and live rate source.
+- [ ] Replace fallback shipping rates with validated provider or configured real regional rates and preserve fallback/error handling.
+
+- [ ] Replace international region options with Russia-only delivery zones and RUB pricing.
+- [ ] Add configurable Russian shipping zones, free-shipping threshold, and explicit tariff labels to the server quote model.
+- [ ] Update cart UI, persistence, tests, and documentation for Russian delivery calculation.
+- [ ] Run checks, visual verification, sync GitHub, deploy to Render, and verify the live quote flow.
+
+- [x] Replace international region options with Russia-only delivery zones and RUB pricing.
+- [x] Add configurable Russian shipping zones, 10,000 ₽ free-shipping threshold, and explicit tariff labels to the server quote model.
+- [x] Update cart UI, persistence, and shipping integration tests for Russian delivery calculation.
+- [x] Run final responsive visual verification; GitHub sync and final checkpoint remain pending.

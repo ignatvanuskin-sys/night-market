@@ -132,12 +132,24 @@ export async function getVerifiedReviews(productId: string): Promise<ReviewRespo
   }
 }
 
-export type ShippingRegion = "EU" | "UK" | "US" | "OTHER";
-const defaultShippingRates: Record<ShippingRegion, number> = { EU: 8, UK: 12, US: 18, OTHER: 24 };
+export type ShippingRegion = "RU_MOSCOW" | "RU_CENTRAL" | "RU_NORTHWEST" | "RU_SOUTH" | "RU_VOLGA" | "RU_URAL" | "RU_SIBERIA" | "RU_FAR_EAST";
+
+// Merchant-configurable domestic delivery tariffs in RUB. These are transparent fallback tariffs,
+// not live carrier quotes; replace them with a carrier/Shopify rate source when credentials are available.
+const defaultShippingRates: Record<ShippingRegion, number> = {
+  RU_MOSCOW: 299,
+  RU_CENTRAL: 399,
+  RU_NORTHWEST: 499,
+  RU_SOUTH: 499,
+  RU_VOLGA: 499,
+  RU_URAL: 699,
+  RU_SIBERIA: 799,
+  RU_FAR_EAST: 999,
+};
 
 export function calculateShipping(region: ShippingRegion, subtotal: number) {
   const threshold = ENV.freeShippingThreshold;
-  const rate = defaultShippingRates[region];
+  const rate = defaultShippingRates[region] ?? defaultShippingRates.RU_CENTRAL;
   const free = subtotal >= threshold;
-  return { region, subtotal, shipping: free ? 0 : rate, freeShipping: free, threshold, remaining: Math.max(0, threshold - subtotal), currency: "EUR" };
+  return { region, subtotal, shipping: free ? 0 : rate, freeShipping: free, threshold, remaining: Math.max(0, threshold - subtotal), currency: "RUB" as const };
 }

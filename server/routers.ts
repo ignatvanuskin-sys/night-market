@@ -27,7 +27,7 @@ export const appRouter = router({
       .input(z.object({ productId: z.string().trim().min(1).max(100) }))
       .query(({ input }) => getVerifiedReviews(input.productId)),
     shippingQuote: publicProcedure
-      .input(z.object({ region: z.enum(["EU", "UK", "US", "OTHER"]), subtotal: z.number().finite().min(0).max(100000) }))
+      .input(z.object({ region: z.enum(["RU_MOSCOW", "RU_CENTRAL", "RU_NORTHWEST", "RU_SOUTH", "RU_VOLGA", "RU_URAL", "RU_SIBERIA", "RU_FAR_EAST"]), subtotal: z.number().finite().min(0).max(100000) }))
       .query(({ input }) => calculateShipping(input.region, input.subtotal)),
   }),
 

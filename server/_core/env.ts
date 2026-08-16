@@ -13,5 +13,5 @@ export const ENV = {
   reviewsApiUrl: process.env.REVIEWS_API_BASE_URL ?? "",
   reviewsApiToken: process.env.REVIEWS_API_TOKEN ?? "",
   reviewsStoreDomain: process.env.REVIEWS_STORE_DOMAIN ?? "",
-  freeShippingThreshold: Number(process.env.FREE_SHIPPING_THRESHOLD ?? 120),
+  freeShippingThreshold: Number(process.env.FREE_SHIPPING_THRESHOLD ?? 10000),
 };
