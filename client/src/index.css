@@ -434,3 +434,31 @@ body.nm-lightbox-open { overflow:hidden; }
 .nm-look-hero-image .nm-look-hero-zoom > .nm-progressive-image { position:relative; inset:auto; right:auto; top:auto; left:auto; transform:none; display:block; color:inherit; font:inherit; line-height:normal; letter-spacing:normal; writing-mode:horizontal-tb; }
 .nm-look-hero-image .nm-look-hero-zoom > .nm-progressive-image .nm-image-progress { position:absolute; inset:50% 14%; right:auto; top:50%; left:14%; transform:none; width:auto; height:2px; }
 @media (max-width:680px) { .nm-favorites-button { max-width:58px; width:58px; display:flex; align-items:center; justify-content:center; gap:4px; padding:0; font-size:0; overflow:visible; } .nm-favorites-button b { display:inline; font:500 9px var(--mono); } }
+
+/* Favorites archive page. */
+.nm-favorites-page { max-width:1500px; min-height:calc(100vh - 86px); margin:0 auto; padding:clamp(70px,10vw,140px) 5vw; }
+.nm-favorites-page h1 { margin:0; font:600 clamp(3rem,7vw,7rem)/.86 var(--display); letter-spacing:-.08em; }
+.nm-favorites-empty { display:grid; justify-items:center; gap:14px; max-width:520px; margin:100px auto; padding:70px 20px; border:1px solid var(--line); text-align:center; }
+.nm-favorites-empty svg { color:var(--orange); }
+.nm-favorites-empty h2 { margin:0; font:600 32px var(--display); }
+.nm-favorites-empty p { color:var(--muted); }
+.nm-favorite-card { min-width:0; position:relative; }
+.nm-favorite-card-image { position:relative; aspect-ratio:4/5; overflow:hidden; background:var(--surface); }
+.nm-favorite-card-image > .nm-progressive-image { width:100%; height:100%; }
+.nm-favorite-card-image > .nm-progressive-image > picture > img { width:100%; height:100%; object-fit:cover; }
+.nm-favorite-card-image .nm-card-favorite { top:14px; right:14px; left:auto; }
+.nm-favorite-card h2 { margin:0; font:600 22px var(--display); }
+.nm-favorites-page .nm-card-meta { min-height:112px; }
+.nm-favorites-page .nm-card-meta p:not(.nm-card-category) { color:var(--muted); }
+.nm-favorites-page + .nm-footer { align-items:center; }
+@media (max-width:680px) { .nm-favorites-page { padding-top:60px; } .nm-favorites-page .nm-catalog-top { align-items:flex-end; } .nm-favorites-page h1 { font-size:3.7rem; } .nm-favorites-page .nm-card-meta { min-height:0; } }
+
+/* Policies and trust page. */
+.nm-policy-page { max-width:1200px; min-height:calc(100vh - 86px); margin:0 auto; padding:clamp(70px,10vw,140px) 5vw; }
+.nm-policy-page h1 { margin:18px 0 30px; font:600 clamp(3.8rem,8vw,8rem)/.84 var(--display); letter-spacing:-.09em; }
+.nm-policy-lede { max-width:560px; color:var(--muted); font-size:17px; line-height:1.7; }
+.nm-policy-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; margin:100px 0 70px; background:var(--line); border:1px solid var(--line); }
+.nm-policy-grid section { min-height:240px; padding:30px; background:var(--bg); }
+.nm-policy-grid h2 { margin:12px 0; font:600 30px var(--display); }
+.nm-policy-grid section > p:last-child { max-width:450px; color:var(--muted); line-height:1.7; }
+@media (max-width:680px) { .nm-policy-page h1 { font-size:4rem; } .nm-policy-grid { grid-template-columns:1fr; margin-top:70px; } .nm-policy-grid section { min-height:0; } }

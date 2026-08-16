@@ -8,6 +8,7 @@ import { trpc } from "@/lib/trpc";
 import ProgressiveImage from "@/components/ProgressiveImage";
 import Lightbox from "@/components/Lightbox";
 import { favoriteProductId, readFavoriteIds, writeFavoriteIds } from "@/lib/favorites";
+import { readCart, writeCart } from "@/lib/cart";
 
 type Product = {
   id: string; title: string; slug: string; category: string; price: number; oldPrice?: number;
@@ -73,9 +74,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [selected, setSelected] = useState<Product | null>(null);
-  const [cart, setCart] = useState<CartLine[]>(() => {
-    try { return JSON.parse(localStorage.getItem("night-market-cart") || "[]"); } catch { return []; }
-  });
+  const [cart, setCart] = useState<CartLine[]>(() => readCart<Product>(new Set(products.map((product) => product.id))));
   const [cartOpen, setCartOpen] = useState(false);
   const [region, setRegion] = useState<RussianRegion>(() => { try { return (localStorage.getItem("night-market-region") as RussianRegion) || "RU_MOSCOW"; } catch { return "RU_MOSCOW"; } });
   const [cartPulse, setCartPulse] = useState(false);
@@ -87,7 +86,7 @@ export default function Home() {
   const [lightbox, setLightbox] = useState<{ src: string; alt: string; title: string } | null>(null);
   const shippingUnlockedRef = useRef<boolean | null>(null);
 
-  useEffect(() => { localStorage.setItem("night-market-cart", JSON.stringify(cart)); }, [cart]);
+  useEffect(() => { writeCart(cart); }, [cart]);
   useEffect(() => { localStorage.setItem("night-market-bundle-ids", JSON.stringify(bundleProductIds)); }, [bundleProductIds]);
   useEffect(() => { localStorage.setItem("night-market-saved-looks", JSON.stringify(savedLooks)); }, [savedLooks]);
   useEffect(() => { writeFavoriteIds(favoriteIds); }, [favoriteIds]);
@@ -141,7 +140,7 @@ export default function Home() {
       <header className="nm-header">
         <a className="nm-brand" href="#top" aria-label="NIGHT MARKET home"><ProgressiveImage src={ASSETS.mark} alt="" /><span>NIGHT<br /><em>MARKET</em></span></a>
         <nav className="nm-nav" aria-label="Primary navigation"><a href="#catalog">Catalog</a><Link href="/lookbook">Lookbook</Link><a href="#manifesto">About</a></nav>
-        <div className="nm-header-actions"><button className="nm-text-button nm-favorites-button" onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" })} aria-label={`Избранное, ${favoriteIds.length} товаров`}><Heart size={16} /> Избранное <b>{String(favoriteIds.length).padStart(2, "0")}</b></button><button className={`nm-text-button ${cartPulse ? "is-pulsing" : ""}`} onClick={() => setCartOpen(true)} aria-label={`Open cart, ${cartCount} items`}><ShoppingBag size={16} /> Bag <b>{String(cartCount).padStart(2, "0")}</b></button><button className="nm-menu-button" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Menu size={20} /></button></div>
+        <div className="nm-header-actions"><Link className="nm-text-button nm-favorites-button" href="/favorites" aria-label={`Избранное, ${favoriteIds.length} товаров`}><Heart size={16} /> Избранное <b>{String(favoriteIds.length).padStart(2, "0")}</b></Link><button className={`nm-text-button ${cartPulse ? "is-pulsing" : ""}`} onClick={() => setCartOpen(true)} aria-label={`Open cart, ${cartCount} items`}><ShoppingBag size={16} /> Bag <b>{String(cartCount).padStart(2, "0")}</b></button><button className="nm-menu-button" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Menu size={20} /></button></div>
       </header>
 
       <main id="top">
@@ -169,7 +168,7 @@ export default function Home() {
         <section id="manifesto" className="nm-manifesto nm-section"><div className="nm-manifesto-mark"><ProgressiveImage src={ASSETS.mark} alt="" /></div><div><p className="nm-eyebrow">04 / a short manifesto</p><h2>Not everything<br />needs to be <i>explained.</i></h2><p className="nm-manifesto-copy">NIGHT MARKET is a growing index of objects with a little more charge than they strictly need. We look for the useful, the beautiful and the almost-forbidden — then put them in a room together.</p><a href="#catalog" className="nm-underlink">Enter the archive <ArrowDownRight size={15} /></a></div></section>
         <section className="nm-newsletter nm-section"><div><p className="nm-eyebrow">05 / after hours</p><h2>Get the next<br /><i>drop quietly.</i></h2></div><form onSubmit={(e) => { e.preventDefault(); toast.success("You're on the list.", { description: "The next drop will find you after dark." }); }}><label htmlFor="email">One note when something strange arrives.</label><div className="nm-email-row"><input id="email" type="email" required placeholder="your@email.com" /><button type="submit" aria-label="Subscribe"><ArrowDownRight size={18} /></button></div><small>No noise. Unsubscribe whenever.</small></form></section>
       </main>
-      <footer className="nm-footer"><a className="nm-brand" href="#top"><ProgressiveImage src={ASSETS.mark} alt="" /><span>NIGHT<br /><em>MARKET</em></span></a><p>Objects for after dark.</p><div><a href="#catalog">Catalog</a><a href="#manifesto">About</a><a href="mailto:hello@nightmarket.example">Contact</a></div><small>© 2026 NIGHT MARKET. Demo storefront.</small></footer>
+      <footer className="nm-footer"><a className="nm-brand" href="#top"><ProgressiveImage src={ASSETS.mark} alt="" /><span>NIGHT<br /><em>MARKET</em></span></a><p>Objects for after dark.</p><div><a href="#catalog">Catalog</a><a href="#manifesto">About</a><Link href="/policies">Delivery & privacy</Link><a href="mailto:hello@nightmarket.example">Contact</a></div><small>© 2026 NIGHT MARKET. Demo storefront.</small></footer>
 
       <FloatingCart cart={cart} cartCount={cartCount} subtotal={subtotal} discountedSubtotal={discountedSubtotal} shippingQuote={shippingQuote.data} shippingLoading={shippingQuote.isLoading} shippingError={Boolean(shippingQuote.error)} onOpen={() => setCartOpen(true)} />
       <AnimatePresence>{shippingCelebration && <motion.div className="nm-shipping-celebration" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} role="status" aria-live="polite"><div className="nm-confetti" aria-hidden="true">{Array.from({ length: 12 }, (_, index) => <i key={index} style={{ "--i": index } as React.CSSProperties} />)}</div><div><Sparkles size={18} /><span>FREE SHIPPING UNLOCKED</span><strong>The night is on us.</strong></div></motion.div>}</AnimatePresence>

@@ -4,7 +4,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import RouteMeta from "./components/RouteMeta";
 import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
+import Policies from "./pages/Policies";
 const Lookbook = lazy(() => import("./pages/Lookbook"));
 
 // Style reminder: NIGHT MARKET uses Occult Luxury Editorial — near-black gallery space,
@@ -31,11 +34,14 @@ function RouteShell() {
 
   return (
     <>
+      <RouteMeta path={location} />
       <AnimatePresence>{booting && <LoadingScreen />}</AnimatePresence>
       <AnimatePresence mode="wait">
         <motion.div key={location} className="nm-route-shell" initial={{ opacity: 0, y: 14, filter: "blur(3px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -10, filter: "blur(3px)" }} transition={{ duration: 0.34, ease: [0.23, 1, 0.32, 1] }}>
           <Suspense fallback={<LoadingScreen route />}><Switch>
             <Route path="/lookbook" component={Lookbook} />
+            <Route path="/favorites" component={Favorites} />
+            <Route path="/policies" component={Policies} />
             <Route path="/" component={Home} />
           </Switch></Suspense>
         </motion.div>

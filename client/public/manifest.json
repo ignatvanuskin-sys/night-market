@@ -1,13 +1,15 @@
 {
-  "name": "NIGHT MARKET",
+  "name": "NIGHT MARKET — Objects for after dark",
   "short_name": "NIGHT MARKET",
-  "description": "Rare objects for after dark.",
+  "lang": "ru",
+  "description": "Редкие объекты, атмосферные вещи и артефакты для жизни после наступления темноты.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0A090D",
   "theme_color": "#0A090D",
   "icons": [{
-    "src": "/manus-storage/night-market-mark_021c3289.png",
+    "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663894363217/FcXuAAsdOxmisWCl.png",
     "sizes": "any",
     "type": "image/png",
     "purpose": "any maskable"

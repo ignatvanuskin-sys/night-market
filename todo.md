@@ -59,3 +59,56 @@
 - [x] Add modern AVIF/WebP picture sources and responsive srcset/sizes while preserving progressive loading and fallbacks.
 - [x] Add persistent product favorites with accessible controls and a header counter.
 - [x] Verify keyboard focus/Escape behavior, responsive layouts, image delivery markup, tests, and production build.
+
+# Production Improvement Roadmap
+
+## Product discovery and commerce UX
+- [x] Add a dedicated Favorites page with saved products, remove actions, quick add, empty state, and cross-route persistence.
+- [ ] Add a full product gallery model with multiple media items and lightbox navigation.
+- [x] Add cart persistence versioning, live-catalog stale-product reconciliation, and quantity validation; clear-cart remains in the existing cart drawer contract.
+- [ ] Add a checkout-ready order summary with delivery, discount, total, and explicit demo/payment-provider states.
+- [ ] Add transparent Russian delivery tariff details, estimated delivery windows, and provider-configuration guidance.
+- [ ] Add truthful stock messaging and an explicit unavailable state without fabricated urgency.
+- [x] Add shareable Lookbook links with canonical restoration and clipboard fallback; product detail URLs remain a follow-up.
+
+## Accessibility and interaction quality
+- [ ] Audit semantic landmarks, heading hierarchy, labels, focus order, and keyboard reachability across Home and Lookbook.
+- [x] Add focus trapping and focus restoration for lightboxes; drawers and quick views remain a follow-up.
+- [ ] Add visible focus styles and reduced-motion coverage for all new interactions.
+- [ ] Ensure mobile navigation, filters, favorite controls, and image controls meet touch-target requirements.
+- [ ] Add accessible live announcements for favorite, cart, shipping, and checkout state changes.
+
+## Performance and media delivery
+- [ ] Confirm CDN image transformation behavior and document AVIF/WebP fallback assumptions.
+- [ ] Add width-aware responsive image presets per surface and avoid oversized asset requests.
+- [ ] Add explicit image dimensions/aspect-ratio contracts to prevent layout shift.
+- [ ] Audit lazy loading, preloading, and route-level code splitting for LCP and INP.
+- [ ] Reduce duplicate image requests and avoid loading offscreen heavy media unnecessarily.
+
+## SEO, metadata, and trust
+- [ ] Add canonical metadata, Russian locale metadata, structured product data, and social previews for Home and Lookbook.
+- [x] Add sitemap, robots, Russian manifest, canonical metadata, and JSON-LD website coverage for public routes.
+- [x] Add truthful Russian delivery, returns, privacy, support, and demo checkout policies at `/policies`.
+- [ ] Keep reviews and ratings empty until connected to a verified provider; never seed customer content.
+- [ ] Add clear contact and support pathways appropriate for a Russian storefront.
+
+## Reliability, security, and operations
+- [ ] Add client error boundaries and friendly fallback states for failed discovery, reviews, shipping, and image requests.
+- [ ] Add request timeouts, safe fallback logging, and redaction rules for server integrations.
+- [ ] Validate all user-controlled inputs and protect localStorage parsing from malformed data.
+- [x] Add favorites and cart persistence tests; existing shipping integration tests remain green.
+- [ ] Add health/readiness documentation, environment-variable checklist, and Render deployment notes.
+- [ ] Review auth initialization so the public storefront does not emit avoidable production warnings.
+- [ ] Add analytics event documentation without collecting sensitive customer data.
+
+## Russian-market readiness
+- [ ] Verify RUB formatting, Russian delivery zones, 10,000 ₽ free-shipping threshold, and tariff override behavior across all cart surfaces.
+- [ ] Add Russia-only copy consistency checks for delivery and checkout language.
+- [ ] Document the boundary between configured tariff fallback and live carrier rates.
+- [ ] Prepare payment-provider and carrier integration seams without adding unverified credentials.
+
+- [x] Reconcile persisted cart lines against the live catalog before hydration and drop unknown or outdated products.
+- [x] Add route-aware canonical, social, and structured metadata for Home, Lookbook, Favorites, and policies instead of one shared root canonical.
+
+- [x] Add server-side route metadata injection so crawlers receive route-specific canonical and social tags in initial HTML.
+- [x] Verify route metadata from direct HTML responses for Home, Lookbook, Favorites, and policies.
