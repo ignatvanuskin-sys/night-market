@@ -322,3 +322,16 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
 @keyframes nm-shipping-pop { from { opacity:0; transform:scale(.86) translateY(12px); } to { opacity:1; transform:none; } }
 @keyframes nm-confetti-fall { from { opacity:0; } 20% { opacity:1; } to { opacity:0; transform:rotate(calc(var(--i) * 31deg + 160deg)) translateY(220px) translateX(calc(var(--i) * 9px - 50px)); } }
 @media (prefers-reduced-motion:reduce) { .nm-shipping-celebration > div:last-child { animation:none; } .nm-confetti { display:none; } }
+
+/* Atmospheric loading and route transition layer. */
+.nm-loading-screen { position:fixed; inset:0; z-index:180; display:grid; place-items:center; align-content:center; gap:22px; background:radial-gradient(circle at 50% 44%,rgba(158,99,255,.12),transparent 25rem),#0A090D; isolation:isolate; }
+.nm-loading-screen.is-route { position:absolute; min-height:100vh; z-index:40; background:rgba(10,9,13,.96); }
+.nm-loading-orbit { position:relative; width:92px; height:92px; border:1px solid rgba(242,237,229,.22); border-radius:50%; transform:rotate(-24deg); animation:nm-loader-orbit 2.4s linear infinite; }
+.nm-loading-orbit:before { content:""; position:absolute; inset:13px; border:1px solid rgba(255,107,34,.35); border-radius:50%; }
+.nm-loading-orbit:after { content:""; position:absolute; width:8px; height:8px; top:9px; left:17px; border-radius:50%; background:var(--orange); box-shadow:0 0 18px var(--orange); }
+.nm-loading-orbit span { position:absolute; inset:29px; display:block; border-radius:50%; background:radial-gradient(circle at 36% 30%,#f2ede5 0 7%,#cfc5d7 8% 12%,#18131d 13% 100%); box-shadow:0 0 32px rgba(158,99,255,.24); }
+.nm-loading-wordmark { display:flex; flex-direction:column; align-items:center; font:700 16px/.8 var(--display); letter-spacing:.15em; }
+.nm-loading-wordmark em { color:var(--orange); font-style:normal; }
+.nm-loading-caption { color:var(--muted); font:500 10px var(--mono); text-transform:uppercase; letter-spacing:.18em; }
+@keyframes nm-loader-orbit { to { transform:rotate(336deg); } }
+@media (prefers-reduced-motion:reduce) { .nm-loading-orbit { animation:none; } .nm-route-shell { filter:none !important; } }

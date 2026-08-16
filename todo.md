@@ -39,3 +39,10 @@
 - [x] Add configurable Russian shipping zones, 10,000 ₽ free-shipping threshold, and explicit tariff labels to the server quote model.
 - [x] Update cart UI, persistence, and shipping integration tests for Russian delivery calculation.
 - [x] Run final responsive visual verification, sync GitHub, and save the final checkpoint.
+
+- [x] Add an atmospheric loading animation for initial and route loading states.
+- [x] Add smooth accessible transitions between Home and Lookbook routes.
+- [x] Verify reduced-motion behavior, responsive layout, tests, and production build for the motion update.
+
+- [x] Capture responsive screenshots for the Lookbook route after the motion update.
+- [x] Verify the Home-to-Lookbook route path and document the reduced-motion fallback in the motion shell; direct Home → Lookbook navigation and desktop/mobile Lookbook previews pass.
