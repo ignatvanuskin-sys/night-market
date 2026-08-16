@@ -6,6 +6,14 @@ describe("Telegram order handoff", () => {
     expect(hasTelegramOrderLines([])).toBe(false);
   });
 
+  it("includes a trimmed order comment and omits blank comments", () => {
+    const withComment = createTelegramOrderUrl({ lines: [{ title: "Black Fig", quantity: 1, price: 2400 }], subtotal: 2400, discountedSubtotal: 2400, shipping: 450, freeShipping: false, regionLabel: "Урал", deliveryWindow: "4–8 рабочих дней", comment: "  Позвонить после 18:00  " });
+    const withMessage = decodeURIComponent(withComment.split("?text=")[1]);
+    expect(withMessage).toContain("Комментарий к заказу: Позвонить после 18:00");
+    const withoutComment = createTelegramOrderUrl({ lines: [{ title: "Black Fig", quantity: 1, price: 2400 }], subtotal: 2400, discountedSubtotal: 2400, shipping: 450, freeShipping: false, regionLabel: "Урал", deliveryWindow: "4–8 рабочих дней", comment: "   " });
+    expect(decodeURIComponent(withoutComment.split("?text=")[1])).not.toContain("Комментарий к заказу");
+  });
+
   it("builds an encoded Russian order message with totals and multiple lines", () => {
     const url = createTelegramOrderUrl({
       lines: [{ title: "Raven Hour", quantity: 2, price: 8800 }, { title: "Black Fig", quantity: 1, price: 2400 }],

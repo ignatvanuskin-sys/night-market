@@ -12,6 +12,7 @@ type TelegramOrderInput = {
   freeShipping: boolean;
   regionLabel: string;
   deliveryWindow: string;
+  comment?: string;
 };
 
 export const TELEGRAM_USERNAME = "eloquncy";
@@ -27,6 +28,7 @@ export function createTelegramOrderUrl(input: TelegramOrderInput): string {
     : "";
   const shipping = input.freeShipping ? "Бесплатно" : rub(input.shipping);
   const total = input.discountedSubtotal + (input.freeShipping ? 0 : input.shipping);
+  const comment = input.comment?.trim() ? `\nКомментарий к заказу: ${input.comment.trim()}` : "";
   const message = [
     "Здравствуйте! Хочу оформить заказ в NIGHT MARKET.",
     "",
@@ -37,6 +39,7 @@ export function createTelegramOrderUrl(input: TelegramOrderInput): string {
     `Регион: ${input.regionLabel}`,
     `Срок: ${input.deliveryWindow}`,
     `Итого: ${rub(total)}`,
+    comment,
     "",
     "Пожалуйста, подтвердите наличие, адрес доставки и способ оплаты в переписке.",
   ].join("\n");

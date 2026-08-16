@@ -162,3 +162,36 @@
 
 - [x] Add an explicit empty-cart guard test and multi-line Telegram payload coverage.
 - [x] Run focused desktop/mobile QA for the cart CTA, keyboard access, drawer behavior, and policy Telegram link.
+
+# Telegram Order Refinement
+
+- [x] Add a cart comment field with safe local state and clear Russian guidance.
+- [x] Include the order comment in the encoded Telegram handoff and add regression coverage.
+- [x] Show a polished success notification after opening Telegram, with accessible live status and reduced-motion support.
+- [x] Replace the footer email contact with direct Telegram links to @eloquncy across public surfaces.
+
+# Telegram Refinement Hardening
+
+- [x] Guard order-comment localStorage writes against restricted-storage failures.
+- [x] Add explicit reduced-motion variants for the Telegram success notification and verify the behavior.
+- [x] Record focused QA coverage for comment persistence and success notification behavior.
+
+# Telegram Focused QA
+
+- [x] Execute and document manual open/close verification for the Telegram success popup.
+- [x] Execute and document reduced-motion verification for the Telegram success popup.
+- [x] Execute and document comment persistence verification across cart reopen/reload behavior.
+
+# Telegram Interaction Verification
+
+- [x] Exercise and document the success-popup dismiss button after opening the Telegram handoff.
+- [x] Emulate prefers-reduced-motion in the browser and document the success-popup opacity-only behavior.
+
+# Telegram Motion Contract
+
+- [x] Extract and unit-test the Telegram success popup motion variants for normal and reduced-motion modes.
+- [x] Verify the dismissal transition after its exit duration completes.
+
+# Telegram Reduced-Motion QA Seam
+
+- [x] Add a development-only reduced-motion override query for deterministic browser verification, then remove it before the production checkpoint.
