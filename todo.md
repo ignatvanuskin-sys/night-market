@@ -46,3 +46,11 @@
 
 - [x] Capture responsive screenshots for the Lookbook route after the motion update.
 - [x] Verify the Home-to-Lookbook route path and document the reduced-motion fallback in the motion shell; direct Home → Lookbook navigation and desktop/mobile Lookbook previews pass.
+
+- [x] Add a reusable accessible image loader with progress, shimmer, and error states.
+- [x] Apply progressive image loading to Home, Lookbook, product drawers, cart previews, and review photos.
+- [x] Verify slow-image behavior, reduced motion, responsive layout, tests, and production build.
+
+- [x] Replace remaining Home brand, mobile-menu, and cart-drawer images with ProgressiveImage.
+- [x] Verify delayed/loading, broken-image, and loaded states on the temporary diagnostics route; the broken URL showed `Image unavailable`, the delayed case showed the loading bar, and reduced-motion fallback is encoded in the CSS contract.
+- [x] Capture post-change Home and Lookbook screenshots at desktop and mobile breakpoints after the aspect-ratio fix.
