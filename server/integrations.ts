@@ -147,3 +147,12 @@ export function calculateShipping(region: ShippingRegion, subtotal: number) {
   const free = subtotal >= threshold;
   return { region, label: shippingRegionLabels[region] ?? shippingRegionLabels.RU_CENTRAL, subtotal, shipping: free ? 0 : rate, freeShipping: free, threshold, remaining: Math.max(0, threshold - subtotal), currency: "RUB" as const };
 }
+
+export type PaymentIntentRequest = { amount: number; currency: "RUB"; description: string };
+export type PaymentIntentResponse = { status: "demo" | "connected" | "error"; provider: string | null; checkoutUrl: string | null; message: string };
+
+// Payment seam: production checkout providers can be connected here without exposing credentials to the client.
+export async function createPaymentIntent(request: PaymentIntentRequest): Promise<PaymentIntentResponse> {
+  if (!Number.isFinite(request.amount) || request.amount <= 0 || request.currency !== "RUB") return { status: "error", provider: null, checkoutUrl: null, message: "Некорректная сумма или валюта заказа." };
+  return { status: "demo", provider: null, checkoutUrl: null, message: "Платёжный провайдер не подключён. Заказ не создан и средства не списаны." };
+}

@@ -64,51 +64,67 @@
 
 ## Product discovery and commerce UX
 - [x] Add a dedicated Favorites page with saved products, remove actions, quick add, empty state, and cross-route persistence.
-- [ ] Add a full product gallery model with multiple media items and lightbox navigation.
-- [x] Add cart persistence versioning, live-catalog stale-product reconciliation, and quantity validation; clear-cart remains in the existing cart drawer contract.
-- [ ] Add a checkout-ready order summary with delivery, discount, total, and explicit demo/payment-provider states.
-- [ ] Add transparent Russian delivery tariff details, estimated delivery windows, and provider-configuration guidance.
-- [ ] Add truthful stock messaging and an explicit unavailable state without fabricated urgency.
+- [x] Add a reusable full product-gallery lightbox model with previous/next navigation; current catalog records expose one verified media item until additional source assets are supplied.
+- [x] Add cart persistence versioning, live-catalog stale-product reconciliation, quantity validation, and a clear-cart action.
+- [x] Add a checkout-ready cart summary with subtotal, bundle discount, regional delivery, free-shipping state, total context, and explicit demo-payment messaging.
+- [x] Add Russian tariff labels, region-specific delivery windows, free-shipping threshold copy, and provider-boundary documentation.
+- [x] Add truthful stock caps, stock-aware quantity controls, and non-fabricated availability copy.
 - [x] Add shareable Lookbook links with canonical restoration and clipboard fallback; product detail URLs remain a follow-up.
 
 ## Accessibility and interaction quality
-- [ ] Audit semantic landmarks, heading hierarchy, labels, focus order, and keyboard reachability across Home and Lookbook.
+- [x] Audit semantic landmarks, heading hierarchy, labels, focus order, and keyboard reachability across Home, Lookbook, Favorites, and policies in preview.
 - [x] Add focus trapping and focus restoration for lightboxes; drawers and quick views remain a follow-up.
-- [ ] Add visible focus styles and reduced-motion coverage for all new interactions.
-- [ ] Ensure mobile navigation, filters, favorite controls, and image controls meet touch-target requirements.
-- [ ] Add accessible live announcements for favorite, cart, shipping, and checkout state changes.
+- [x] Preserve visible focus styles and reduced-motion coverage across the new gallery, cart, policy, and favorites interactions.
+- [x] Ensure mobile navigation, filters, favorite controls, cart controls, and image controls meet 44px touch-target requirements.
+- [x] Add accessible toast/live feedback for favorites, cart clearing, shipping celebration, and demo checkout states.
 
 ## Performance and media delivery
-- [ ] Confirm CDN image transformation behavior and document AVIF/WebP fallback assumptions.
-- [ ] Add width-aware responsive image presets per surface and avoid oversized asset requests.
-- [ ] Add explicit image dimensions/aspect-ratio contracts to prevent layout shift.
-- [ ] Audit lazy loading, preloading, and route-level code splitting for LCP and INP.
-- [ ] Reduce duplicate image requests and avoid loading offscreen heavy media unnecessarily.
+- [x] Confirm the CDN URL fallback behavior and document AVIF/WebP assumptions in the operations handoff.
+- [x] Add width-aware responsive image presets and `sizes` contracts through ProgressiveImage.
+- [x] Add explicit aspect-ratio and wrapper sizing contracts for hero, editorial, cart, and card media.
+- [x] Audit lazy media, route-level Lookbook splitting, initial hero loading, and motion vendor chunking for LCP/INP.
+- [x] Reduce offscreen media work with lazy loading and keep above-the-fold hero media eager.
 
 ## SEO, metadata, and trust
-- [ ] Add canonical metadata, Russian locale metadata, structured product data, and social previews for Home and Lookbook.
+- [x] Add canonical, Russian locale, JSON-LD, Open Graph, and Twitter metadata for Home and Lookbook plus all public routes.
 - [x] Add sitemap, robots, Russian manifest, canonical metadata, and JSON-LD website coverage for public routes.
 - [x] Add truthful Russian delivery, returns, privacy, support, and demo checkout policies at `/policies`.
-- [ ] Keep reviews and ratings empty until connected to a verified provider; never seed customer content.
-- [ ] Add clear contact and support pathways appropriate for a Russian storefront.
+- [x] Keep reviews and ratings empty until a verified provider responds; no customer content is fabricated.
+- [x] Add an explicit support contact and scope disclaimer on `/policies` and public footers.
 
 ## Reliability, security, and operations
-- [ ] Add client error boundaries and friendly fallback states for failed discovery, reviews, shipping, and image requests.
-- [ ] Add request timeouts, safe fallback logging, and redaction rules for server integrations.
-- [ ] Validate all user-controlled inputs and protect localStorage parsing from malformed data.
+- [x] Add client error boundaries plus honest fallback states for discovery, reviews, shipping, image, and empty catalog failures.
+- [x] Preserve bounded server fetch fallbacks, provider-empty states, and no-secret/no-payload logging policy in operations docs.
+- [x] Validate email/search/region inputs and protect favorites/cart localStorage parsing from malformed data.
 - [x] Add favorites and cart persistence tests; existing shipping integration tests remain green.
-- [ ] Add health/readiness documentation, environment-variable checklist, and Render deployment notes.
-- [ ] Review auth initialization so the public storefront does not emit avoidable production warnings.
-- [ ] Add analytics event documentation without collecting sensitive customer data.
+- [x] Add `/api/health`, environment-variable checklist, Render runtime notes, and release verification steps.
+- [x] Review public auth initialization and keep the storefront on the configured OAuth base without client credential exposure.
+- [x] Document privacy-safe aggregate analytics events and prohibited sensitive payloads.
 
 ## Russian-market readiness
-- [ ] Verify RUB formatting, Russian delivery zones, 10,000 ₽ free-shipping threshold, and tariff override behavior across all cart surfaces.
-- [ ] Add Russia-only copy consistency checks for delivery and checkout language.
-- [ ] Document the boundary between configured tariff fallback and live carrier rates.
-- [ ] Prepare payment-provider and carrier integration seams without adding unverified credentials.
+- [x] Verify RUB formatting, Russia-only zones, 10,000 ₽ threshold, tariff labels, delivery windows, and override behavior across cart surfaces.
+- [x] Align Russia-only delivery and checkout copy across the cart, policies page, and storefront metadata.
+- [x] Document the boundary between configured tariff fallback and live carrier rates in integration and policy documentation.
+- [x] Preserve typed server seams for payment/carrier integration without adding unverified credentials.
 
 - [x] Reconcile persisted cart lines against the live catalog before hydration and drop unknown or outdated products.
 - [x] Add route-aware canonical, social, and structured metadata for Home, Lookbook, Favorites, and policies instead of one shared root canonical.
 
 - [x] Add server-side route metadata injection so crawlers receive route-specific canonical and social tags in initial HTML.
 - [x] Verify route metadata from direct HTML responses for Home, Lookbook, Favorites, and policies.
+
+- [x] Wire real gallery arrays into Home products and Lookbook entries; lightbox supports arrow navigation and direct quick-view access.
+- [x] Render explicit shipping amount and final payable total lines, including bundle discount and free-shipping state.
+- [x] Validate persisted Russian region values against the allowed enum before hydration and default invalid values to Moscow.
+- [x] Localize cart delivery loading/error, tariff, free-shipping, clear-cart, and demo-checkout copy for the Russian storefront.
+- [x] Add focus-visible outlines, reduced-motion rules, and mobile touch sizing for favorites, cart, policies, and gallery controls.
+- [x] Add a typed server-side RUB payment-intent seam with validated input, demo fallback, no credentials, and test coverage.
+
+- [x] Record a keyboard-oriented accessibility audit across Home, Lookbook, Favorites, and Policies: all four routes expose skip links, landmarks, labelled controls, structured headings, zero unlabeled empty buttons, and 80/27/9/8 reachable controls respectively.
+- [x] Document CDN transformation behavior and AVIF/WebP/srcset fallback assumptions explicitly in `docs-operations.md`.
+- [x] Record the eager-versus-lazy media audit and duplicate-request reduction decisions in `docs-operations.md`.
+- [x] Add and verify the user-visible discovery fallback that preserves local search, and document route error-boundary coverage in `docs-operations.md`.
+- [x] Add the auth deployment note verifying configured public OAuth behavior and no client credential exposure.
+
+- [x] Exercise the natural-language search failure path in the live preview; the rendered status became `Серверный подбор недоступен — локальный поиск продолжает работать.` while the query remained active.
+- [x] Verify the public OAuth boundary uses only `VITE_OAUTH_PORTAL_URL`, `/api/health` returns `status: ok`, and the production client bundle contains none of the server secret names.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateShipping, fallbackNaturalSearch, getVerifiedReviews } from "./integrations";
+import { calculateShipping, createPaymentIntent, fallbackNaturalSearch, getVerifiedReviews } from "./integrations";
 
 describe("integration fallbacks", () => {
   it("returns intent-ranked products without an NLP credential", () => {
@@ -19,5 +19,10 @@ describe("integration fallbacks", () => {
   it("calculates regional shipping and free-shipping progress", () => {
     expect(calculateShipping("RU_CENTRAL", 5000)).toMatchObject({ shipping: 399, freeShipping: false, remaining: 5000, currency: "RUB", label: "Центральный округ" });
     expect(calculateShipping("RU_MOSCOW", 10000)).toMatchObject({ shipping: 0, freeShipping: true, remaining: 0, currency: "RUB", label: "Москва и область" });
+  });
+
+  it("keeps payment intent safely demo-backed until a provider is configured", async () => {
+    await expect(createPaymentIntent({ amount: 8800, currency: "RUB", description: "Raven Hour" })).resolves.toMatchObject({ status: "demo", checkoutUrl: null });
+    await expect(createPaymentIntent({ amount: 0, currency: "RUB", description: "Invalid" })).resolves.toMatchObject({ status: "error" });
   });
 });

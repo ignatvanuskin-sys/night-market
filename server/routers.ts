@@ -3,7 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { z } from "zod";
-import { calculateShipping, getVerifiedReviews, naturalLanguageSearch } from "./integrations";
+import { calculateShipping, createPaymentIntent, getVerifiedReviews, naturalLanguageSearch } from "./integrations";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -29,6 +29,9 @@ export const appRouter = router({
     shippingQuote: publicProcedure
       .input(z.object({ region: z.enum(["RU_MOSCOW", "RU_CENTRAL", "RU_NORTHWEST", "RU_SOUTH", "RU_VOLGA", "RU_URAL", "RU_SIBERIA", "RU_FAR_EAST"]), subtotal: z.number().finite().min(0).max(100000) }))
       .query(({ input }) => calculateShipping(input.region, input.subtotal)),
+    paymentIntent: publicProcedure
+      .input(z.object({ amount: z.number().finite().positive().max(1000000), currency: z.literal("RUB"), description: z.string().trim().min(1).max(200) }))
+      .mutation(({ input }) => createPaymentIntent(input)),
   }),
 
   // TODO: add feature routers here, e.g.

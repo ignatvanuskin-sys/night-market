@@ -36,6 +36,7 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
   registerOAuthRoutes(app);
+  app.get("/api/health", (_req, res) => res.status(200).json({ status: "ok", service: "night-market", timestamp: new Date().toISOString() }));
   // tRPC API
   app.use(
     "/api/trpc",

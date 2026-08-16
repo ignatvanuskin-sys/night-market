@@ -462,3 +462,16 @@ body.nm-lightbox-open { overflow:hidden; }
 .nm-policy-grid h2 { margin:12px 0; font:600 30px var(--display); }
 .nm-policy-grid section > p:last-child { max-width:450px; color:var(--muted); line-height:1.7; }
 @media (max-width:680px) { .nm-policy-page h1 { font-size:4rem; } .nm-policy-grid { grid-template-columns:1fr; margin-top:70px; } .nm-policy-grid section { min-height:0; } }
+
+.nm-lightbox-nav { position:fixed; top:50%; z-index:2; display:grid; place-items:center; width:48px; height:48px; color:var(--ink); background:rgba(17,15,21,.82); border:1px solid var(--line); transform:translateY(-50%); }
+.nm-lightbox-nav:hover { color:var(--orange); border-color:var(--orange); }
+.nm-lightbox-prev { left:clamp(16px,5vw,72px); }
+.nm-lightbox-next { right:clamp(16px,5vw,72px); }
+.nm-lightbox-caption small { margin-left:10px; color:var(--muted); }
+@media (max-width:680px) { .nm-lightbox-nav { width:40px; height:40px; } }
+
+/* Interaction audit coverage for roadmap additions. */
+.nm-card-favorite:focus-visible, .nm-favorites-button:focus-visible, .nm-underlink:focus-visible, .nm-cart-actions button:focus-visible, .nm-policy-page a:focus-visible, .nm-lightbox-nav:focus-visible, .nm-lightbox-close:focus-visible { outline:2px solid var(--orange); outline-offset:4px; }
+@media (prefers-reduced-motion: reduce) { .nm-lightbox-nav, .nm-card-favorite, .nm-cart-actions button, .nm-favorites-button, .nm-policy-page a { transition:none !important; animation:none !important; } }
+
+@media (max-width:680px) { .nm-header button, .nm-header a, .nm-filter-toggle, .nm-card-favorite, .nm-look-favorite, .nm-look-quick, .nm-drawer-zoom, .nm-quantity button, .nm-lightbox-nav, .nm-lightbox-close { min-width:44px; min-height:44px; } }
