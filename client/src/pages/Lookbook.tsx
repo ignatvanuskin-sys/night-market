@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowDownRight, ArrowLeft, ArrowUpRight, Eye, Heart, Share2, X } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "wouter";
@@ -17,6 +17,7 @@ const addToLocalCart = (look: Look) => { const product = { id: look.quickTitle.t
 export default function Lookbook() {
   const [quickView, setQuickView] = useState<Look | null>(null);
   const [saved, setSaved] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem("night-market-lookbook-saved") || "[]"); } catch { return []; } });
+  useEffect(() => { const shared = new URLSearchParams(window.location.search).get("look"); const match = shared ? looks.find((look) => look.number === shared) : undefined; if (match) setQuickView(match); const onEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setQuickView(null); }; window.addEventListener("keydown", onEscape); return () => window.removeEventListener("keydown", onEscape); }, []);
   const saveLook = (look: Look) => { const next = saved.includes(look.number) ? saved.filter((id) => id !== look.number) : [...saved, look.number]; setSaved(next); localStorage.setItem("night-market-lookbook-saved", JSON.stringify(next)); toast.success(next.includes(look.number) ? "Образ сохранён" : "Образ удалён из избранного"); };
   const shareLook = async (look: Look) => { const url = `${window.location.origin}/lookbook?look=${look.number}`; try { if (navigator.share) await navigator.share({ title: `NIGHT MARKET — ${look.title}`, text: look.note, url }); else { await navigator.clipboard.writeText(url); toast.success("Ссылка скопирована", { description: url }); } } catch { await navigator.clipboard?.writeText(url); toast.success("Ссылка скопирована", { description: url }); } };
   return <div className="nm-site nm-lookbook"><header className="nm-header"><Link className="nm-brand" href="/" aria-label="NIGHT MARKET home"><img src={assets.mark} alt="" /><span>NIGHT<br /><em>MARKET</em></span></Link><nav className="nm-nav" aria-label="Primary navigation"><Link href="/">Catalog</Link><a href="#looks">Collections</a><a href="#editorial-note">About</a></nav><Link className="nm-text-button" href="/">← Back to market</Link></header><main>
