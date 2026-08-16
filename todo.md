@@ -1,7 +1,7 @@
 # NIGHT MARKET expansion tasks
 
-- [ ] Add related products and a "Build the look" bundle section to the product drawer.
-- [ ] Add page-level transition animation and active navigation state for Home, Catalog, and Lookbook.
-- [ ] Add cart microinteractions for item addition, count update, and drawer entry.
-- [ ] Create a dedicated Lookbook page with Occult Luxury Editorial compositions and working product links.
-- [ ] Verify desktop/mobile rendering, keyboard Escape behavior, reduced motion, and production build.
+- [ ] Add one-click full-look bundle to the product drawer with a transparent special discount and subtotal presentation.
+- [ ] Add quick view overlays for Lookbook objects on hover/focus without leaving the Lookbook route.
+- [ ] Add style and theme metadata to products, plus multi-select catalog filters and fast clear behavior.
+- [ ] Add catalog sorting by relevance, newest, price, and curated style/theme match.
+- [ ] Verify desktop/mobile hover fallback, keyboard focus, reduced motion, cart persistence, and production build.

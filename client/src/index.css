@@ -215,3 +215,23 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
 .nm-look-note p:not(.nm-eyebrow) { max-width:420px; color:var(--muted); line-height:1.7; font-size:15px; margin:0 0 28px; }
 @keyframes nm-reveal { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:none; } }
 @media (max-width:680px) { .nm-look-hero { min-height:auto; padding:74px 5vw 60px; display:flex; flex-direction:column; align-items:stretch; gap:60px; } .nm-look-hero h1 { font-size:clamp(4rem,17vw,6rem); } .nm-look-hero-image { width:86%; align-self:center; } .nm-look-hero-image span { right:-25px; } .nm-look-list { padding:95px 5vw 20px; } .nm-look { min-height:0; display:flex; flex-direction:column; align-items:stretch; gap:35px; margin-bottom:100px; } .nm-look-reverse .nm-look-image,.nm-look-reverse .nm-look-copy { order:initial; } .nm-look-image span { left:-15px; } .nm-look-copy h2 { font-size:3.5rem; } .nm-look-note { margin-bottom:90px; padding:75px 5vw; display:flex; flex-direction:column; align-items:flex-start; gap:45px; } .nm-look-note>img { width:90px; align-self:center; } }
+
+/* Latest commerce discovery layer: discount clarity, multi-axis filters, and Lookbook quick view. */
+.nm-price-old { color:var(--muted) !important; text-decoration:line-through; text-decoration-color:var(--orange); }
+.nm-bundle-saving { display:flex; justify-content:space-between; align-items:center; margin-top:10px; color:var(--lime); font:10px var(--mono); text-transform:uppercase; letter-spacing:.06em; }
+.nm-bundle-saving strong { color:var(--lime); font-weight:500; }
+.nm-clear-filters { align-self:center; padding:0 0 5px; border-bottom:1px solid var(--orange); background:transparent; color:var(--orange); font:500 10px var(--mono); text-transform:uppercase; letter-spacing:.08em; }
+.nm-look-image { overflow:visible; }
+.nm-look-quick { position:absolute; right:15px; bottom:15px; display:flex; align-items:center; gap:7px; padding:10px 12px; background:var(--orange); color:var(--bg); font:500 10px var(--mono); text-transform:uppercase; letter-spacing:.08em; opacity:0; transform:translateY(7px); transition:opacity .22s ease,transform .22s ease; }
+.nm-look:hover .nm-look-quick,.nm-look-quick:focus-visible { opacity:1; transform:none; }
+.nm-look-quick-mobile { display:none; }
+.nm-quick-overlay { position:fixed; inset:0; z-index:80; display:grid; place-items:center; padding:24px; background:rgba(5,4,7,.76); backdrop-filter:blur(10px); animation:nm-reveal .2s ease both; }
+.nm-quick-view { position:relative; display:grid; grid-template-columns:minmax(220px, .8fr) minmax(250px, 1fr); width:min(760px,100%); background:var(--surface); border:1px solid var(--line); box-shadow:0 25px 80px rgba(0,0,0,.4); overflow:hidden; }
+.nm-quick-view>img { width:100%; height:100%; min-height:390px; object-fit:cover; }
+.nm-quick-view>div { padding:52px 42px 42px; align-self:center; }
+.nm-quick-view h2 { margin:0 0 20px; font:700 clamp(2.5rem,5vw,4.5rem)/.86 var(--display); letter-spacing:-.08em; }
+.nm-quick-view p:not(.nm-eyebrow) { color:var(--muted); font-size:14px; line-height:1.7; margin-bottom:20px; }
+.nm-quick-view strong { display:block; color:var(--orange); font:500 14px var(--mono); margin-bottom:28px; }
+.nm-quick-view .nm-cta { justify-content:space-between; width:100%; }
+@media (max-width:1024px) { .nm-filters { gap:14px; } .nm-filters label { flex-wrap:wrap; } }
+@media (max-width:680px) { .nm-filters { gap:15px; flex-wrap:wrap; } .nm-filters label { min-width:calc(50% - 8px); flex-wrap:nowrap; } .nm-filters label select { max-width:92px; } .nm-clear-filters { margin-top:5px; } .nm-look-quick { display:none; } .nm-look-quick-mobile { position:absolute; display:flex; align-items:center; gap:7px; right:12px; bottom:12px; padding:9px 11px; background:var(--orange); color:var(--bg); font:500 9px var(--mono); text-transform:uppercase; } .nm-quick-overlay { padding:12px; } .nm-quick-view { display:block; max-height:92vh; overflow-y:auto; } .nm-quick-view>img { min-height:260px; height:44vh; } .nm-quick-view>div { padding:27px 22px 30px; } .nm-quick-view h2 { font-size:3rem; } }
