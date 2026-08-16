@@ -13,5 +13,7 @@ services:
         value: production
       - key: VITE_APP_TITLE
         value: NIGHT MARKET
+      - key: OAUTH_SERVER_URL
+        value: https://api.manus.im
       - key: JWT_SECRET
         generateValue: true
