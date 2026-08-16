@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowDownRight, Check, ChevronDown, Filter, Heart, Menu, Minus, Plus, Search, ShoppingBag, Sparkles, X } from "lucide-react";
 import { toast } from "sonner";
+import { Link } from "wouter";
 
 type Product = {
   id: string; title: string; slug: string; category: string; price: number; oldPrice?: number;
@@ -42,6 +43,7 @@ export default function Home() {
     try { return JSON.parse(localStorage.getItem("night-market-cart") || "[]"); } catch { return []; }
   });
   const [cartOpen, setCartOpen] = useState(false);
+  const [cartPulse, setCartPulse] = useState(false);
 
   useEffect(() => { localStorage.setItem("night-market-cart", JSON.stringify(cart)); }, [cart]);
   useEffect(() => {
@@ -66,6 +68,7 @@ export default function Home() {
   const addToCart = (product: Product) => {
     setCart((current) => { const exists = current.find((line) => line.product.id === product.id); return exists ? current.map((line) => line.product.id === product.id ? { ...line, quantity: line.quantity + 1 } : line) : [...current, { product, quantity: 1 }]; });
     toast.success(`${product.title} добавлен в корзину`, { description: "Можно продолжить выбор или перейти к оформлению." });
+    setCartPulse(true); window.setTimeout(() => setCartPulse(false), 520);
     setSelected(null); setCartOpen(true);
   };
   const changeQuantity = (id: string, delta: number) => setCart((current) => current.map((line) => line.product.id === id ? { ...line, quantity: Math.max(0, line.quantity + delta) } : line).filter((line) => line.quantity));
@@ -76,8 +79,8 @@ export default function Home() {
       <div className="nm-noise" aria-hidden="true" />
       <header className="nm-header">
         <a className="nm-brand" href="#top" aria-label="NIGHT MARKET home"><img src={ASSETS.mark} alt="" /><span>NIGHT<br /><em>MARKET</em></span></a>
-        <nav className="nm-nav" aria-label="Primary navigation"><a href="#catalog">Catalog</a><a href="#collections">Collections</a><a href="#manifesto">About</a></nav>
-        <div className="nm-header-actions"><button className="nm-text-button" onClick={() => setCartOpen(true)} aria-label={`Open cart, ${cartCount} items`}><ShoppingBag size={16} /> Bag <b>{String(cartCount).padStart(2, "0")}</b></button><button className="nm-menu-button" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Menu size={20} /></button></div>
+        <nav className="nm-nav" aria-label="Primary navigation"><a href="#catalog">Catalog</a><Link href="/lookbook">Lookbook</Link><a href="#manifesto">About</a></nav>
+        <div className="nm-header-actions"><button className={`nm-text-button ${cartPulse ? "is-pulsing" : ""}`} onClick={() => setCartOpen(true)} aria-label={`Open cart, ${cartCount} items`}><ShoppingBag size={16} /> Bag <b>{String(cartCount).padStart(2, "0")}</b></button><button className="nm-menu-button" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Menu size={20} /></button></div>
       </header>
 
       <main id="top">
@@ -119,7 +122,10 @@ function ProductCard({ product, index, onSelect, onAdd }: { product: Product; in
 }
 
 function ProductDrawer({ product, onClose, onAdd }: { product: Product; onClose: () => void; onAdd: (p: Product) => void }) {
-  return <motion.div className="nm-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}><motion.aside className="nm-drawer nm-product-drawer" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "spring", damping: 30, stiffness: 260 }} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={product.title}><button className="nm-close" onClick={onClose} aria-label="Close product"><X /></button><div className="nm-drawer-image"><img src={product.image} alt={`${product.title} large product image`} /><span className="nm-badge">{product.category}</span></div><div className="nm-drawer-copy"><p className="nm-eyebrow">{product.slug} / 0{product.stock < 10 ? product.stock : 8}</p><div className="nm-drawer-title"><h2>{product.title}</h2><strong>{money(product.price)}</strong></div><p className="nm-drawer-lede">{product.shortDescription}</p><p>{product.description}</p><div className="nm-specs"><span><b>stock</b>{product.stock > 20 ? "in archive" : `${product.stock} left`}</span><span><b>dispatch</b>24–48h</span><span><b>finish</b>{product.colors.map((c) => <i key={c} style={{ backgroundColor: c }} />)}</span></div><div className="nm-drawer-actions"><button className="nm-cta" onClick={() => onAdd(product)}>Add to bag <ArrowDownRight size={18} /></button><button className="nm-save" onClick={() => toast.success("Saved to your private list") }><Heart size={16} /> Save</button></div><p className="nm-shipping"><Check size={14} /> Free shipping over 90 €. Returns within 14 days.</p></div></motion.aside></motion.div>;
+  const [buildLook, setBuildLook] = useState(false);
+  const related = products.filter((item) => item.id !== product.id && (item.category === product.category || item.tags.some((tag) => product.tags.includes(tag)))).slice(0, 3);
+  const addLook = () => { related.forEach(onAdd); toast.success("Образ собран", { description: `${product.title} и ${related.length} подходящих объекта добавлены в корзину.` }); };
+  return <motion.div className="nm-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}><motion.aside className="nm-drawer nm-product-drawer" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "spring", damping: 30, stiffness: 260 }} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={product.title}><button className="nm-close" onClick={onClose} aria-label="Close product"><X /></button><div className="nm-drawer-image"><img src={product.image} alt={`${product.title} large product image`} /><span className="nm-badge">{product.category}</span></div><div className="nm-drawer-copy"><p className="nm-eyebrow">{product.slug} / 0{product.stock < 10 ? product.stock : 8}</p><div className="nm-drawer-title"><h2>{product.title}</h2><strong>{money(product.price)}</strong></div><p className="nm-drawer-lede">{product.shortDescription}</p><p>{product.description}</p><div className="nm-specs"><span><b>stock</b>{product.stock > 20 ? "in archive" : `${product.stock} left`}</span><span><b>dispatch</b>24–48h</span><span><b>finish</b>{product.colors.map((c) => <i key={c} style={{ backgroundColor: c }} />)}</span></div><div className="nm-drawer-actions"><button className="nm-cta" onClick={() => onAdd(product)}>Add to bag <ArrowDownRight size={18} /></button><button className="nm-save" onClick={() => toast.success("Saved to your private list") }><Heart size={16} /> Save</button></div><p className="nm-shipping"><Check size={14} /> Free shipping over 90 €. Returns within 14 days.</p><div className={`nm-build-look ${buildLook ? "is-open" : ""}`}><button className="nm-build-toggle" onClick={() => setBuildLook(!buildLook)}><span><Sparkles size={15} /> Собери образ</span><ChevronDown size={15} /></button>{buildLook && <div className="nm-build-content"><p>Собрали рядом то, что держит ту же частоту.</p><div>{related.map((item) => <button className="nm-related-mini" key={item.id} onClick={() => onAdd(item)}><img src={item.image} alt="" /><span><b>{item.title}</b><small>{money(item.price)}</small></span><Plus size={14} /></button>)}</div><button className="nm-cta nm-build-add" onClick={addLook}>Добавить весь образ <ArrowDownRight size={17} /></button></div>}</div></div></motion.aside></motion.div>;
 }
 
 function CartDrawer({ cart, subtotal, onClose, onChange, onCheckout }: { cart: CartLine[]; subtotal: number; onClose: () => void; onChange: (id: string, delta: number) => void; onCheckout: () => void }) {
