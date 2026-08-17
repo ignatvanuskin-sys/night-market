@@ -25,4 +25,21 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+export const orderIntents = mysqlTable("order_intents", {
+  id: int("id").autoincrement().primaryKey(),
+  idempotencyKey: varchar("idempotencyKey", { length: 96 }).notNull().unique(),
+  status: mysqlEnum("status", ["prepared", "opened", "confirmed", "cancelled"]).default("prepared").notNull(),
+  currency: varchar("currency", { length: 3 }).notNull(),
+  region: varchar("region", { length: 32 }).notNull(),
+  subtotal: int("subtotal").notNull(),
+  discountedSubtotal: int("discountedSubtotal").notNull(),
+  shipping: int("shipping").notNull(),
+  total: int("total").notNull(),
+  linesJson: text("linesJson").notNull(),
+  comment: text("comment"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type OrderIntent = typeof orderIntents.$inferSelect;
+export type InsertOrderIntent = typeof orderIntents.$inferInsert;

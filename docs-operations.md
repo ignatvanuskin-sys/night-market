@@ -40,3 +40,9 @@ The branded 404 route should be checked with a deliberately unknown URL after ea
 ## Runtime and no-JavaScript recovery note
 
 The storefront is an interactive React client and the primary catalog/cart experience requires JavaScript. The server still returns route-aware HTML metadata and a branded shell, while the final error boundary and 404 route provide safe recovery copy when client rendering fails. Release verification must include direct HTTP checks for `/`, `/product/raven-hour`, `/lookbook`, `/favorites`, `/policies`, an unknown route, and `/api/health`; browser verification must confirm the catalog, product details, order preview, and Telegram handoff remain usable after hydration.
+
+## Server order-intent boundary
+
+Before the Telegram handoff, the public `orderIntents.prepare` procedure validates the RUB snapshot, line subtotal, discount arithmetic, supported region, canonical server price, known product ID, and server stock cap. It persists a minimal `prepared` ledger row keyed by an idempotency key; it never stores payment credentials or the full Telegram message. After opening Telegram, the client marks the same key `opened`. `local_only` is an explicit degraded state when the database is unavailable, and the UI still preserves the manual Telegram fallback with a warning. Operators should review prepared/opened rows during incident checks and treat them as intent records, not paid orders.
+
+The current server catalog contract is intentionally small and must be updated atomically with catalog price/stock releases. The next architecture step is moving that contract to one authoritative catalog source so client and server cannot drift.

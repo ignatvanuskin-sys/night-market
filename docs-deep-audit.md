@@ -2,50 +2,52 @@
 
 **Дата аудита:** 17 августа 2026 года.  
 **Публичный домен:** <https://occultshop-tqvscu7k.manus.space>  
-**Метод:** анализ исходников и маршрутов, runtime logs, typecheck, production build, 24 Vitest-теста, desktop/mobile preview, проверка Telegram handoff и публичных metadata/health-контрактов.
+**Метод:** анализ исходников и маршрутов, runtime logs, typecheck, production build, 28 Vitest-тестов, bundle budget, local release smoke check, desktop/mobile preview, Telegram handoff и публичные metadata/health-контракты.
 
 ## Жёсткий вывод
 
-NIGHT MARKET — сильная визуальная storefront-витрина для ручного оформления через Telegram. Это **не автоматизированная e-commerce платформа**: сайт не создаёт серверный заказ, не резервирует остатки, не хранит order history, не подтверждает оплату и не имеет операторской очереди. Оценка ниже намеренно строгая и не выдаёт ручную модель Telegram за полноценный commerce backend.
+NIGHT MARKET — сильная visual storefront-витрина с русским UX и ручным оформлением через Telegram. В текущем проходе появился **серверный order-intent boundary**: перед Telegram валидируются RUB-арифметика, известный товар, canonical price, stock cap, region и idempotency key; после открытия Telegram фиксируется статус `opened`. Это существенно повышает надёжность, но не превращает ручной handoff в автоматический заказ.
 
-## Итоговая оценка: **7,8/10**
+## Итоговая оценка: **8,7/10**
 
 | Область | Балл | Жёсткое объяснение |
 |---|---:|---|
-| Визуальный дизайн и бренд | **9,0** | Последовательная Occult Luxury Editorial система, сильная типографика, атмосфера и качественная responsive media-подача. Снижение за повторное использование части editorial assets для разных SKU. |
-| UX и конверсия | **8,2** | Есть поиск, фильтры, quick view, product pages, favorites, cart, order preview и понятный Telegram CTA. Конверсия зависит от ручного ответа оператора и не имеет серверного статуса заказа. |
-| Русская локализация | **8,7** | Основные страницы, фильтры, корзина, policies, product pages, feedback и accessibility labels переведены. Английские названия SKU/бренда сохранены намеренно; отдельные editorial fragments требуют контент-ревью. |
-| Accessibility | **8,1** | Есть focus states, labels, Escape, live regions, reduced motion, keyboard-friendly controls и touch targets. Нет автоматического axe/Playwright gate и отдельной screen-reader сертификации. |
-| Performance и media | **7,4** | Реальные WebP/AVIF-варианты, lazy media и route splitting реализованы. Initial JS около **763 kB**, CSS около **152 kB** до gzip; нет Lighthouse performance budget. |
-| SEO и discoverability | **8,5** | Есть product routes, canonical, OG/Twitter, Product JSON-LD, sitemap и robots; добавлена фактическая FAQ-копия. Нет полноценного серверного каталога и автоматической проверки всех HTML metadata в CI. |
-| Commerce integrity | **6,2** | RUB, Russia-only delivery, stock caps и Telegram preview честны. Нет серверного заказа, резерва остатков, payment confirmation, webhook, возвратного статуса или автоматической синхронизации каталога. |
-| Security и privacy | **7,8** | Секреты не попадают в client bundle, есть bounded fallbacks и no-sensitive-payload policy. LocalStorage не является доверенным источником; Telegram остаётся внешней границей пользовательских данных. |
-| Operations и support | **6,5** | Есть `/api/health`, runbook и provider boundaries. Нет uptime/error monitoring, CI browser gate, structured order queue и operator dashboard. |
-| Code quality и maintainability | **7,9** | Typed catalog, shared cart helper, tests и clean build присутствуют. Home остаётся крупным компонентом, а route/UI integrity пока покрыта unit-тестами, но не полноценным E2E. |
+| Визуальный дизайн и бренд | **9,0** | Последовательная Occult Luxury Editorial система, сильная типографика, атмосфера и responsive media. Снижение за повторное использование части editorial assets для разных SKU. |
+| UX и конверсия | **8,5** | Поиск, фильтры, quick view, product pages, favorites, cart, order preview и понятный Telegram CTA. Ручное подтверждение всё ещё увеличивает friction. |
+| Русская локализация | **8,7** | Основной customer-facing UI переведён. Английские названия SKU/бренда сохранены намеренно; отдельные editorial fragments требуют контент-ревью. |
+| Accessibility | **8,2** | Focus states, labels, Escape, live regions, reduced motion, keyboard controls и touch targets реализованы. Нет автоматического axe/Playwright gate и screen-reader сертификации. |
+| Performance и media | **7,9** | WebP/AVIF, lazy media и route splitting плюс автоматический raw bundle budget: JS 850 kB, CSS 180 kB. Текущий initial JS около 767 kB остаётся высоким. |
+| SEO и discoverability | **8,7** | Product routes, canonical, OG/Twitter, Product JSON-LD, sitemap, robots, FAQ guidance и release metadata smoke checks присутствуют. Нет server-backed catalog source. |
+| Commerce integrity | **8,0** | Server-side order-intent ledger, idempotency, canonical price/stock validation, status `prepared/opened`, RUB and Telegram preview. Нет true reservation, server order history, payment/webhook и fulfilment lifecycle. |
+| Security и privacy | **8,5** | No client secrets, bounded fallbacks, minimal order snapshot without raw comment text, response security headers, no payment data and explicit Telegram boundary. LocalStorage remains untrusted; operator access control is not built. |
+| Operations и support | **7,8** | `/api/health`, release smoke script, response-header checks, bundle budget, pnpm release gate, runbook and handoff statuses exist. Нет hosted uptime/error monitoring, alerting и operator dashboard. |
+| Code quality и maintainability | **8,3** | Shared cart, typed order boundary, server validation, security middleware, repeatable quality scripts, 28 tests and clean build. Home remains large, and the server catalog contract must be kept synchronized until a single source of truth exists. |
 
-## Что внесено в текущем improvement pass
+**Итог:** 8,7/10. До честных 9,0 не хватает не визуальной полировки, а эксплуатационных гарантий: real reservation/order workflow, automated browser/accessibility CI, hosted monitoring и one authoritative catalog source.
 
-Добавлена русская FAQ-секция на товарных страницах с фактическими ответами про оформление заказа, доставку и уточнение размера/цвета. Улучшены breadcrumbs и интерактивные раскрывающиеся блоки. Добавлена отдельная integrity-проверка всех восьми canonical product slugs и unknown-route lookup. Повторно проверены Home, Product, Lookbook и Policies на desktop preview; typecheck, production build и 24 Vitest-теста проходят.
+## Внесённые улучшения
 
-## Слабые места и приоритеты
+Добавлена таблица `order_intents` с idempotency key, статусами `prepared/opened/confirmed/cancelled`, минимальным snapshot корзины и без платёжных данных. Новый public tRPC boundary проверяет RUB-суммы, скидку, доставку, известные product IDs, canonical server prices и stock caps. Home сначала пытается сохранить intent, затем открывает Telegram с безопасным fallback; после открытия фиксируется `opened`. Добавлены 4 regression tests для subtotal, shipping, stale price и stock overflow.
+
+Добавлены `pnpm quality:budget` для контроля raw JS/CSS payload, `pnpm quality:smoke` для health, public routes, product routes, unknown-route recovery, Product JSON-LD и security headers, а также `pnpm quality:release` для повторяемого release gate. Deprecated pnpm settings перенесены в `pnpm-workspace.yaml`; warning исчез. Runbook описывает degraded `local_only`, ручной операторский lifecycle, privacy-safe отсутствие raw comments в ledger и порядок incident review.
+
+## Слабые места и оставшийся backlog
 
 | Приоритет | Слабое место | Реальный риск | Следующее решение |
 |---|---|---|---|
-| **P0** | Нет серверной сущности заказа | Нельзя надёжно восстановить заказ, повторить отправку, проверить спор или дать оператору очередь | Ввести `orders`, snapshot линий, статус, idempotency key и защищённый operator workflow. |
-| **P0** | Остатки не резервируются сервером | Два клиента могут выбрать один последний товар | Server-side availability check и короткая reservation window перед handoff. |
-| **P0** | Telegram — ручной внешний транспорт | Нет гарантии, что оператор увидел сообщение или клиент завершил заказ | Handoff log без платёжных данных, операторское подтверждение и fallback contact path. |
-| **P1** | Initial bundle слишком большой | Медленнее первый экран на мобильной сети | Разделить Home/Product/Favorites/shared vendors и ввести gzip/Lighthouse budget. |
-| **P1** | Нет CI E2E и accessibility gates | Регрессии маршрутов, фокуса и order preview могут попасть в релиз | Playwright smoke suite для product routes, cart preview, 404, keyboard и mobile viewport. |
-| **P1** | Нет production monitoring | Ошибки live-пользователей могут оставаться незамеченными | Uptime probe, error tracking, deploy smoke checks и уведомление оператору. |
-| **P1** | Каталог статичен | Цены, stock и media обновляются только через релиз | Единый backend/Shopify/managed DB source с безопасным cache layer. |
+| **P0** | Нет true reservation window | Два клиента могут получить один последний товар между intent и операторским подтверждением | Ввести inventory/reservations с TTL и атомарным stock decrement. |
+| **P0** | Нет полноценной сущности `orders` | Нельзя дать клиенту номер, статус, повторную отправку или историю | Создать order lifecycle поверх intent: confirmed, packed, shipped, delivered, cancelled. |
+| **P1** | Нет hosted monitoring | Ошибки live-пользователей могут остаться незамеченными | Подключить uptime/error provider и alerting для health, 5xx и handoff failures. |
+| **P1** | Нет автоматических browser/accessibility gates | Регрессии focus, mobile и Telegram preview могут попасть в main | Playwright + axe smoke suite в CI. |
+| **P1** | Initial JS около 767 kB | Первый экран медленнее на слабых мобильных сетях | Дальнейший split Home/Product/shared vendors и strict gzip/Lighthouse budgets. |
+| **P1** | Catalog contract дублируется на server boundary | Ручное изменение цены может рассинхронизировать UI и server validation | Вынести catalog truth в backend/managed DB/Shopify и генерировать client projection. |
 | **P2** | Повторяющиеся изображения SKU | Снижает доверие к ассортименту | Загрузить уникальные verified photos для каждого товара. |
-| **P2** | Нет account/order history | Пользователь не видит прошлые заказы | Добавить только после появления server order model. |
-| **P2** | Отзывы пустые | Это честно, но снижает social proof | Подключить verified provider; не seed-ить отзывы вручную. |
+| **P2** | Пустые verified reviews | Честно, но снижает social proof | Подключить реальный provider после consent/privacy review. |
 
-## Ограничения и non-goals
+## Ограничения
 
-Не добавлялись онлайн-платежи, fake reviews, неподтверждённые customer photos, unsupported live-carrier claims или рассылка без opt-in провайдера. Telegram `@eloquncy` остаётся ручной точкой подтверждения; тарифы доставки являются configured/fallback estimates и должны подтверждаться оператором.
+Онлайн-платежи, fake reviews, неподтверждённые customer photos, unsupported live-carrier claims и рассылка без opt-in provider не добавлялись. Telegram `@eloquncy` остаётся ручной точкой подтверждения; fallback tariffs требуют подтверждения оператором. Поэтому **10/10 сейчас было бы недостоверной оценкой**.
 
-## Рекомендуемый порядок дальнейших работ
+## Рекомендуемый порядок для 9,0+
 
-Сначала необходимо создать серверную модель заказа и idempotent handoff log, затем добавить server-side stock validation/reservation. После этого следует поставить Playwright/Lighthouse CI и runtime monitoring. Только потом имеет смысл подключать реальные reviews, уникальные фотографии SKU и customer account history.
+Первым шагом нужен inventory/reservation layer с TTL. Затем — order lifecycle и операторская очередь. Параллельно следует поставить Playwright/axe CI и hosted monitoring. После этого — единый каталог и дальнейшее уменьшение initial bundle. При выполнении этих условий оценка может подняться выше 9 без рекламного завышения.

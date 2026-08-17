@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { calculateShipping, createPaymentIntent, getVerifiedReviews, naturalLanguageSearch } from "./integrations";
+import { markOrderIntentOpened, orderIntentInputSchema, prepareOrderIntent } from "./order-intent";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -17,6 +18,15 @@ export const appRouter = router({
         success: true,
       } as const;
     }),
+  }),
+
+  orderIntents: router({
+    prepare: publicProcedure
+      .input(orderIntentInputSchema)
+      .mutation(({ input }) => prepareOrderIntent(input)),
+    markOpened: publicProcedure
+      .input(z.object({ idempotencyKey: z.string().trim().min(16).max(96) }))
+      .mutation(({ input }) => markOrderIntentOpened(input.idempotencyKey)),
   }),
 
   discovery: router({

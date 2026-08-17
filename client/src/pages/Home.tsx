@@ -129,22 +129,27 @@ export default function Home() {
   const bundleSubtotal = bundleActive ? cart.filter((line) => bundleProductIds.includes(line.product.id)).reduce((sum, line) => sum + line.product.price * line.quantity, 0) : 0;
   const discountedSubtotal = bundleActive ? subtotal - bundleSubtotal * 0.1 : subtotal;
   const shippingQuote = trpc.discovery.shippingQuote.useQuery({ region, subtotal: discountedSubtotal }, { staleTime: 5_000, retry: false });
+  const orderIntentPrepare = trpc.orderIntents.prepare.useMutation();
+  const orderIntentOpened = trpc.orderIntents.markOpened.useMutation();
+  const orderIntentKeyRef = useRef<string | null>(null);
   useEffect(() => { localStorage.setItem("night-market-region", region); }, [region]);
   useEffect(() => { const unlocked = discountedSubtotal >= FREE_SHIPPING_THRESHOLD; if (shippingUnlockedRef.current === false && unlocked) { setShippingCelebration(true); window.setTimeout(() => setShippingCelebration(false), 2200); } shippingUnlockedRef.current = unlocked; }, [discountedSubtotal]);
 
-  const openTelegramOrder = () => {
+  const openTelegramOrder = async () => {
     if (!hasTelegramOrderLines(cart)) return;
-    const url = createTelegramOrderUrl({
-      lines: cart.map(({ product, quantity }) => ({ title: product.title, price: product.price, quantity })),
-      subtotal,
-      discountedSubtotal,
-      shipping: shippingQuote.data?.shipping ?? 0,
-      freeShipping: Boolean(shippingQuote.data?.freeShipping),
-      regionLabel: russianRegionLabels[region],
-      deliveryWindow: deliveryWindows[region],
-      comment: orderComment,
-    });
+    const shipping = shippingQuote.data?.shipping ?? 0;
+    const freeShipping = Boolean(shippingQuote.data?.freeShipping);
+    const idempotencyKey = orderIntentKeyRef.current ?? (orderIntentKeyRef.current = crypto.randomUUID());
+    const lines = cart.map(({ product, quantity }) => ({ productId: product.id, title: product.title, price: product.price, quantity }));
+    try {
+      const result = await orderIntentPrepare.mutateAsync({ idempotencyKey, currency: "RUB", region, regionLabel: russianRegionLabels[region], deliveryWindow: deliveryWindows[region], lines, subtotal, discountedSubtotal, shipping, freeShipping, comment: orderComment });
+      if (result.status === "local_only") toast.warning("Заказ откроется в Telegram без серверного журнала", { description: "Повторите попытку позже, чтобы сохранить handoff в системе." });
+    } catch {
+      toast.warning("Не удалось сохранить серверный черновик", { description: "Открываем Telegram напрямую; оператор подтвердит заказ вручную." });
+    }
+    const url = createTelegramOrderUrl({ lines: cart.map(({ product, quantity }) => ({ title: product.title, price: product.price, quantity })), subtotal, discountedSubtotal, shipping, freeShipping, regionLabel: russianRegionLabels[region], deliveryWindow: deliveryWindows[region], comment: orderComment });
     window.open(url, "_blank", "noopener,noreferrer");
+    void orderIntentOpened.mutateAsync({ idempotencyKey }).catch(() => undefined);
     setTelegramSuccess(true);
     window.setTimeout(() => setTelegramSuccess(false), 4200);
     toast.success("Заказ подготовлен", { description: "Открываем личные сообщения NIGHT MARKET в Telegram." });

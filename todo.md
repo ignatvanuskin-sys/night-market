@@ -235,3 +235,14 @@
 - [x] Add a production-safe no-JavaScript/error recovery and runtime verification note where applicable.
 - [x] Re-run tests, typecheck, production build, visual checks, and live route/health probes.
 - [x] Update the strict scorecard and publish the hardened release with remaining weaknesses clearly stated.
+
+# 9/10 Production Hardening Gates
+
+- [x] Define score gates for commerce integrity, reliability, accessibility, performance, SEO, operations, localization, and maintainability.
+- [x] Add a server-side order-intent boundary with idempotency protection and explicit manual-Telegram status, without collecting payment.
+- [x] Add server-side stock validation to the order-intent boundary and make the client handoff fail safely when catalog state is stale.
+- [x] Add automated route, catalog, metadata, and accessibility contract checks; browser-level axe/E2E remains explicitly staged.
+- [x] Add a measurable bundle/performance budget and document the current baseline and threshold.
+- [x] Add a release smoke-check script for health, public routes, product routes, unknown-route recovery, metadata, and security headers.
+- [x] Improve operational documentation for order-intent review, failed handoffs, rollback, and monitoring setup.
+- [x] Re-run the full validation matrix, update the strict scorecard, and publish the highest defensible score without claiming 10/10 where external systems are absent.
