@@ -577,3 +577,13 @@ body.nm-lightbox-open { overflow:hidden; }
 .nm-card-detail-link { display:inline-flex; align-items:center; gap:.35rem; margin-left:.7rem; color:rgba(244,239,231,.62); font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; }
 @media (max-width: 800px) { .nm-product-detail { grid-template-columns:1fr; padding-top:1rem; } .nm-product-gallery { position:relative; top:auto; } .nm-product-copy { padding-top:0; } .nm-related-products { grid-template-columns:1fr; } }
 @media (max-width: 520px) { .nm-product-facts { grid-template-columns:1fr; } .nm-product-copy h1 { font-size:3.5rem; } .nm-related-product-grid { grid-template-columns:repeat(2,1fr); } .nm-product-breadcrumb { padding-top:1rem; } }
+
+.nm-product-faq { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.13); }
+.nm-product-faq h2 { margin: .4rem 0 1rem; font-size: 2rem; } .nm-product-faq h2 i { color:#ff7135; font-weight:400; }
+.nm-product-faq details { border-top: 1px solid rgba(255,255,255,.1); padding: .9rem 0; }
+.nm-product-faq details:last-child { border-bottom: 1px solid rgba(255,255,255,.1); }
+.nm-product-faq summary { cursor:pointer; color:#f4efe7; font-size:.86rem; list-style:none; display:flex; justify-content:space-between; gap:1rem; }
+.nm-product-faq summary::-webkit-details-marker { display:none; } .nm-product-faq summary::after { content:'+'; color:#ff7135; font-size:1.1rem; } .nm-product-faq details[open] summary::after { content:'−'; }
+.nm-product-faq details p { max-width: 36rem; margin:.7rem 0 .2rem; color:rgba(244,239,231,.62); line-height:1.6; font-size:.78rem; }
+.nm-product-breadcrumb strong { color:#f4efe7; font-weight:500; }
+.nm-product-breadcrumb a:focus-visible,.nm-product-faq summary:focus-visible { outline:2px solid #ff7135; outline-offset:4px; }

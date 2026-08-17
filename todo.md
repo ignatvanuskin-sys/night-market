@@ -223,3 +223,15 @@
 - [x] Create individual product detail routes for every catalog product with gallery, description, stock, sizes, delivery, review state, favorite, add-to-cart, and Telegram-ready cart action.
 - [x] Add route-aware product metadata, canonical URLs, and structured product information without inventing reviews or availability claims.
 - [x] Validate mobile/desktop UI, keyboard focus, route recovery, localization scan, typecheck, tests, and production build.
+
+# Strict Production Audit and Latest Improvements
+
+- [x] Inspect the current release, live routes, bundle/runtime logs, metadata, and user-facing localization for regression gaps.
+- [x] Score design, UX/conversion, localization, accessibility, performance, SEO, commerce integrity, security/privacy, operations, and code quality strictly out of 10.
+- [x] Document every material weakness with severity, user/business impact, and whether it is fixable without external credentials.
+- [x] Add product-page breadcrumbs and FAQ-style delivery/order guidance without inventing reviews or claims.
+- [x] Add automated route/catalog integrity checks for all eight product pages and metadata contracts.
+- [x] Improve remaining localization and accessibility labels found by the audit.
+- [x] Add a production-safe no-JavaScript/error recovery and runtime verification note where applicable.
+- [x] Re-run tests, typecheck, production build, visual checks, and live route/health probes.
+- [x] Update the strict scorecard and publish the hardened release with remaining weaknesses clearly stated.

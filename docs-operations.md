@@ -36,3 +36,7 @@ Before publishing a release, check `/api/health` and confirm the response report
 For the public release, review browser console and server logs for repeated errors, slow tRPC requests, failed image responses, and provider fallback messages. The current site intentionally uses manual Telegram confirmation, configured Russian tariff fallbacks, and an empty verified-review state. Any future live carrier, review, newsletter, or payment provider must be added behind a bounded server adapter, documented in policies, and covered by a rollback path before activation.
 
 The branded 404 route should be checked with a deliberately unknown URL after each routing change. The global error fallback must show only safe recovery copy to visitors; stack traces may be logged in development for diagnosis but must never be rendered into production HTML.
+
+## Runtime and no-JavaScript recovery note
+
+The storefront is an interactive React client and the primary catalog/cart experience requires JavaScript. The server still returns route-aware HTML metadata and a branded shell, while the final error boundary and 404 route provide safe recovery copy when client rendering fails. Release verification must include direct HTTP checks for `/`, `/product/raven-hour`, `/lookbook`, `/favorites`, `/policies`, an unknown route, and `/api/health`; browser verification must confirm the catalog, product details, order preview, and Telegram handoff remain usable after hydration.
