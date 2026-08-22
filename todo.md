@@ -246,3 +246,10 @@
 - [x] Add a release smoke-check script for health, public routes, product routes, unknown-route recovery, metadata, and security headers.
 - [x] Improve operational documentation for order-intent review, failed handoffs, rollback, and monitoring setup.
 - [x] Re-run the full validation matrix, update the strict scorecard, and publish the highest defensible score without claiming 10/10 where external systems are absent.
+
+# Vercel Deployment Request
+
+- [ ] Inspect current Git branch, commit, Vercel project linkage, build/start configuration, and required environment variables.
+- [ ] Trigger deployment of the current production release to the user-provided Vercel project/domain.
+- [ ] Verify the Vercel deployment status, homepage, product route, policies route, and health/API compatibility.
+- [ ] Report any external-hosting limitations, especially Express server routes, database variables, OAuth, storage, and Telegram handoff behavior.
