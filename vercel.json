@@ -1,6 +1,6 @@
 {
   "framework": "vite",
-  "buildCommand": "pnpm install --frozen-lockfile && pnpm run build",
+  "buildCommand": "pnpm install --frozen-lockfile && pnpm run build && node scripts/prepare-vercel.mjs",
   "outputDirectory": "dist/public",
   "cleanUrls": true,
   "headers": [
