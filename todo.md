@@ -253,3 +253,11 @@
 - [x] Trigger deployment of the current production release to the user-provided Vercel project/domain.
 - [x] Verify the Vercel deployment status, homepage, product route, policies route, and health/API compatibility.
 - [x] Report any external-hosting limitations, especially Express server routes, database variables, OAuth, storage, and Telegram handoff behavior.
+
+# Vercel Image Loading Fix
+
+- [ ] Inspect every catalog/Lookbook media URL and verify HTTP status, content type, CORS, and browser accessibility from the Vercel domain.
+- [ ] Identify why the current CDN/storage image URLs render as IMAGE UNAVAILABLE on Vercel.
+- [ ] Replace inaccessible image references with reliable public production assets and preserve responsive WebP/AVIF fallback behavior.
+- [ ] Add media regression coverage and verify Home, Product, Lookbook, Favorites, cart previews, and lightbox images on Vercel.
+- [ ] Publish the corrected media release and document any remaining asset limitations.
