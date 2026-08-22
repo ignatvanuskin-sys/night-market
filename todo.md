@@ -249,7 +249,7 @@
 
 # Vercel Deployment Request
 
-- [ ] Inspect current Git branch, commit, Vercel project linkage, build/start configuration, and required environment variables.
-- [ ] Trigger deployment of the current production release to the user-provided Vercel project/domain.
-- [ ] Verify the Vercel deployment status, homepage, product route, policies route, and health/API compatibility.
-- [ ] Report any external-hosting limitations, especially Express server routes, database variables, OAuth, storage, and Telegram handoff behavior.
+- [x] Inspect current Git branch, commit, Vercel project linkage, build/start configuration, and required environment variables.
+- [x] Trigger deployment of the current production release to the user-provided Vercel project/domain.
+- [x] Verify the Vercel deployment status, homepage, product route, policies route, and health/API compatibility.
+- [x] Report any external-hosting limitations, especially Express server routes, database variables, OAuth, storage, and Telegram handoff behavior.
